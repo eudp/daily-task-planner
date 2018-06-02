@@ -1,6 +1,7 @@
 {
   "name": "todo-app",
   "version": "0.0.0",
+  "author" : "Efrain Diaz",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
