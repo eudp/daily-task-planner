@@ -17,54 +17,80 @@ todoRoutes.route('/all').get(function (req, res, next) {
 
 todoRoutes.route('/add').post(function (req, res) {
 
-	Todo.create(
+	Todo.findOneAndUpdate(
 		{
-			name: req.body.name,
-			done: false
+			//format date is month/day/year
+			date: Math.floor(new Date(req.body.date).getTime() / 1000)
+		},
+		{
+			date: Math.floor(new Date(req.body.date).getTime() / 1000),
+			"$push": {
+				tasks: {
+					text: req.body.text,
+					done: false
+				}
+			}
+		},
+		{
+			upsert: true,
+			new: true
 		},
 		function (error, todo) {
 			if (error) {
-				res.status(400).send('Unable to create todo list');
+				res.status(400).send('Unable to create todo');
 			}
 			res.status(200).json(todo);
 		}
 	);
 });
 
-todoRoutes.route('/delete/:id').get(function (req, res, next) {
-	var id = req.params.id;
+todoRoutes.route('/delete').post(function (req, res, next) {
 
-	Todo.findByIdAndRemove(id, function (err, todo) {
-		if (err) {
-			return next(new Error('Todo was not found'));
+	Todo.findOneAndUpdate(
+		{
+			//format date is month/day/year
+			date: Math.floor(new Date(req.body.date).getTime() / 1000)
+		},
+		{
+			"$pull": {
+				tasks: {
+					_id: req.body.id,
+				}
+			}
+		},
+		function (error, todo) {
+			if (error) {
+				return next(new Error('Todo was not found'));
+			}
+			res.json('Succesfully removed');
 		}
-
-		res.json('Succesfully removed');
-	});
+	);
 });
 
-todoRoutes.route('/update/:id').post(function (req, res, next) {
-	var id = req.params.id;
+todoRoutes.route('/update').post(function (req, res, next) {
 
-	Todo.findByID(id, function (error, todo) {
-		if (error) {
-			return next(new Error('Todo was not found'));
-		} else {
-			todo.name = req.body.name;
-			todo.done = req.body.done;
-
-			todo.save(
-				function (error, todo){
-				
-					if (error) {
-						res.status(400).send('Unable to update todo');
-					} else {
-						res.status(200).json(todo);
-					}
-				}
-			);
+	Todo.findOneAndUpdate(
+		{
+			//format date is month/day/year
+			date: Math.floor(new Date(req.body.date).getTime() / 1000),
+			"tasks._id": req.body.id
+		},
+		{
+			"$set" : {
+				"tasks.$.text" : req.body.text,
+				"tasks.$.done" : req.body.done
+			}
+		},
+		{
+			new: true
+		},
+		function (error, todo) {
+			if (error) {
+				res.status(400).send('Unable to update todo');
+			}
+			res.status(200).json(todo);
 		}
-	});
+	);
 });
 
 module.exports = todoRoutes;
