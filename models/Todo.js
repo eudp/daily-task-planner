@@ -1,20 +1,22 @@
 var mongoose = require('mongoose');
 
 var task = new mongoose.Schema({
+	idUser: mongoose.Schema.Types.ObjectId,
+	nameUser: String,
 	text: String,
-	done: Boolean,
-	idUser: mongoose.Schema.Types.ObjectId
+	note: String,
+	done: Boolean
 });
 
 var todo = new mongoose.Schema({
-
 	date: Number,
-	tasks: [task]
+	tasks:[task]
 },
 
 	{
 		collection: 'todos'
 	}
+	
 );
 
 module.exports = mongoose.model('Todo', todo);
