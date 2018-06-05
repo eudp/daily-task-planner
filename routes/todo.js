@@ -23,7 +23,6 @@ todoRoutes.route('/add').post(function (req, res) {
 			date: Math.floor(new Date(req.body.date).getTime() / 1000)
 		},
 		{
-			date: Math.floor(new Date(req.body.date).getTime() / 1000),
 			"$push": {
 				tasks: {
 					text: req.body.text,
