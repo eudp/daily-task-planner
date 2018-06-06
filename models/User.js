@@ -9,7 +9,7 @@ var user = new mongoose.Schema({
 },
 
 	{
-		collection: 'Users',
+		collection: 'users',
 		timestamps: {
 			createdAt: 'createdAt',
 			updatedAt: 'updatedAt'
