@@ -5,11 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
 
 var config  = require('./Config');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/users');
 var todoRouter  = require('./routes/todo');
 
 var app = express();
@@ -27,8 +28,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(flash());
+app.use((req, res, next) => {
+	res.locals.success_messages = req.flash('success');
+	res.locals.error_messages = req.flash('error');
+	next();
+})
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', userRouter);
 app.use('/api', todoRouter);
 
 // catch 404 and forward to error handler
