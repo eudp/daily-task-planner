@@ -7,16 +7,16 @@ var User = require('../models/User');
 
 // Validation schema for Joi
 
-const userSchema = Joi.object.keys({
+const userSchema = Joi.object().keys({
 	email: Joi.string().email().required(),
 	userName: Joi.string().required(),
 	password: Joi.string().regex(/^[a-zA-z0-9]{6,30}$/).required(),
 	confirmationPassword: Joi.any().valid(Joi.ref('password')).required()
 });
 
-userRoutes.get('/register')
+userRoutes.route('/register')
 	.get((req,res) => {
-		res.render('register');
+		//res.render('register');
 	})
 	.post(async (req,res,next) => {
 		try {
