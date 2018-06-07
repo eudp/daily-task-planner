@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var flash = require('connect-flash');
 
 var config  = require('./Config');
@@ -27,6 +28,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({
+	cookie: { maxAge: 60000},
+	secret: 'secretcode123',
+	saveUninitialized: false,
+	resave: false
+}))
 
 app.use(flash());
 app.use((req, res, next) => {
