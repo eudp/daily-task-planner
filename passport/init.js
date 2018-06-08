@@ -18,10 +18,13 @@ module.exports = (passport, LocalStrategy) => {
 			})
 	});
 
-	passport.use(new LocalStrategy((userName, password, done) => {
-		const errorMsg = 'Invalid username or password';
-
-		User.findOne({userName})
+	passport.use(new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password'
+	},
+	(email, password, done) => {
+		const errorMsg = 'Invalid email or password';
+		User.findOne({email})
 			.then(user => {
 
 				if (!user) {
