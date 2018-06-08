@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-var user = new mongoose.Schema({
+var UserSchema = new mongoose.Schema({
 	email: String,
 	userName: String,
 	password: String
@@ -13,19 +13,42 @@ var user = new mongoose.Schema({
 		timestamps: {
 			createdAt: 'createdAt',
 			updatedAt: 'updatedAt'
-		}
+		},
+		index: { unique: true }
 	}
 	
 );
 
+UserSchema.pre('save', async function(next) {
+	const user = this;
 
-module.exports = mongoose.model('User', user);
+	if (!user.isModified('password')) {
+		return next();
+	}
 
-module.exports.hashPassword = async (password) => {
 	try {
+
 		const salt = await bcrypt.genSalt(10);
-		return await bcrypt.hash(password, salt);
+		const hash = await bcrypt.hash(user.password, salt);
+
+		user.password = hash;
+
+		next();
+
 	} catch(error) {
 		throw new Error('Hashing failed', error);
 	}
-}
+
+});
+
+UserSchema.methods.validatePassword = function (candidatePassword) {
+	return new Promise((resolve, reject) => {
+		bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+			if (err) return reject(err);
+			resolve(isMatch);
+		});
+	});
+};
+
+
+module.exports = mongoose.model('User', UserSchema);

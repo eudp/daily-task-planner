@@ -35,10 +35,7 @@ userRoutes.route('/register')
 				return;
 			}
 
-			const hash = await User.hashPassword(result.value.password);
-
 			delete result.value.confirmationPassword;
-			result.value.password = hash;
 
 			const newUser = await new User(result.value);
 			await newUser.save();
