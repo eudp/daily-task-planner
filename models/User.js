@@ -4,7 +4,12 @@ var bcrypt = require('bcryptjs');
 var UserSchema = new mongoose.Schema({
 	email: String,
 	userName: String,
-	password: String
+	password: String,
+	email: {
+		type: String,
+		required: true,
+		index: { unique: true }
+	}
 
 },
 
@@ -13,8 +18,7 @@ var UserSchema = new mongoose.Schema({
 		timestamps: {
 			createdAt: 'createdAt',
 			updatedAt: 'updatedAt'
-		},
-		index: { unique: true }
+		}
 	}
 	
 );
