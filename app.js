@@ -10,11 +10,11 @@ var flash = require('connect-flash');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var config  = require('./Config');
+var config = require('./Config');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/users');
-var todoRouter  = require('./routes/todo');
+var todoRouter = require('./routes/todo');
 
 var app = express();
 
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
 	cookie: { maxAge: 60000},
-	secret: 'secretcode123',
+	secret: 'keyboard cat',
 	saveUninitialized: false,
 	resave: false
 }))
@@ -44,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
-app.use('/users', userRouter);
+app.use('/users', userRouter(passport));
 app.use('/api', todoRouter);
 
 // catch 404 and forward to error handler
