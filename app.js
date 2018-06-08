@@ -39,11 +39,9 @@ app.use(session({
 
 app.use(flash());
 
+require('./passport/init')(passport, LocalStrategy);
 app.use(passport.initialize());
 app.use(passport.session());
-
-var initPassport = require('./passport/init');
-initPassport(passport);
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
