@@ -1,17 +1,36 @@
-var User = require('./models/User');
+var User = require('../models/User');
 
-module.exports = function (passport){
+module.exports = (passport, LocalStrategy) => {
 	
 	passport.serializeUser(function(user, done) {
 		console.log(`serializing user: `, user);
-		done(null, user.id);
+		done(null, user._id);
 	});
 
 	passport.deserializeUser(function(id, done) {
-		User.findById(id, function(err, user) {
-			console.log(`deserializing user:`, user);
-			done(err, user);
-		});
+		User.findById(id)
+			.then(function(user) {
+				console.log(`deserializing user:`, user);
+				done(null, user);
+			})
+			.catch(function(err) {
+				done(err);
+			})
 	});
 
+	passport.use(new LocalStrategy((userName, password, done) => {
+		const errorMsg = 'Invalid username or password';
+
+		User.findOne({userName})
+			.then(user => {
+
+				if (!user) {
+					return done(null, false, {message:errorMsg});
+				}
+
+				return user.validatePassword(password)
+					.then(isMatch => done(null, isMatch ? user : false, isMatch ? null : {message: errorMsg}));
+			})
+			.catch(done);
+	}));
 }
