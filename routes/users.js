@@ -16,27 +16,36 @@ const userSchema = Joi.object().keys({
 
 module.exports = function(passport) {
 
+	userRoutes.get('/', (req, res, next) => {
+
+		res.render('index', {user: req.user, flash: req.flash()});
+	});
+
 	userRoutes.route('/login')
-		.post(
+		.post(	
 			passport.authenticate('local', 
 				{
-					successRedirect: '',
-					failureRedirect: '',
+					successRedirect: '/users',
+					failureRedirect: '/users',
 					failureFlash: true
 				}
 			)
 		);
 
 	userRoutes.route('/logout')
-		.post((req, res) => {
+		.get((req, res) => {
 			req.logout();
 			req.session.destroy();
-			res.redirect('');
+			res.redirect('/users');
 		});
 
 	userRoutes.route('/register')
 		.get((req,res) => {
-			//res.render('register');
+			if (!req.user) {
+				res.render('register', {flash: req.flash()});
+			} else {
+				res.redirect('/users');
+			}
 		})
 		.post(async (req,res,next) => {
 			try {
@@ -44,14 +53,14 @@ module.exports = function(passport) {
 
 				if (result.error) {
 					req.flash('error', 'Data entered is not valid. Please try again.');
-					res.redirect('/users/register');
+					res.render('register', {flash: req.flash()});
 					return;
 				}
 
 				const user = await User.findOne({'email' : result.value.email });
 				if (user) {
 					req.flash('error', 'Email is already in use');
-					res.redirect('/users/register');
+					res.render('register', {flash: req.flash()});
 					return;
 				}
 
@@ -60,8 +69,8 @@ module.exports = function(passport) {
 				const newUser = await new User(result.value);
 				await newUser.save();
 
-				req.flash('success', 'Registration sucessfully, go ahead and login.');
-				res.redirect('/users/login');
+				req.flash('success', 'Registration sucessfully now please log in.');
+				res.redirect('/users');
 			} catch(error) {
 				next(error);
 			}
