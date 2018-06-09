@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	if flash.error
+		div.error #{flash.error}
+
+	h1 Register!
+	form(action="/users/register", method="post")
+		div.input
+			label email
+			input(type="text", name="email")
+		div.input
+			label user name
+			input(type="text", name="userName")
+		div.input
+			label password
+			input(type="password", name="password")
+		div.input
+			label confirm password
+			input(type="password", name="confirmationPassword")
+		div.actions
+			input(type="submit")
+
