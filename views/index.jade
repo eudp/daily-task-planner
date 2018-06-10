@@ -2,24 +2,6 @@ extends layout
 
 block content
 
-	if flash.error
-		div.error #{flash.error}
-
-	if flash.success
-		div.success #{flash.success}
-
-	if !user
-		h1 Log in dude!
-		form(action="/users/login", method="post")
-			div.input
-				label email
-				input(type="text", name="email")
-			div.input
-				label password
-				input(type="password", name="password")
-			div.actions
-				input(type="submit")
-	else 
-		h1 Welcome again #{user.userName}
-		a(href="/users/logout")
-			p Log out
+	h1 Welcome again #{user.userName}
+	a(href="/logout")
+		p Log out

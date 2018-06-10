@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+	if flash.error
+		div.error #{flash.error}
+
+	if flash.success
+		div.success #{flash.success}
+
+
+	h1 Log in dude!
+	form(action="/login", method="post")
+		div.input
+			label email
+			input(type="text", name="email")
+		div.input
+			label password
+			input(type="password", name="password")
+		div.actions
+			input(type="submit")
