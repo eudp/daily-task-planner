@@ -16,17 +16,15 @@ const userSchema = Joi.object().keys({
 
 module.exports = function(passport) {
 
-	userRoutes.get('/', (req, res, next) => {
-
-		res.render('index', {user: req.user, flash: req.flash()});
-	});
-
 	userRoutes.route('/login')
+		.get((req, res, next) => {
+			res.render('login', {flash: req.flash()});
+		})
 		.post(	
 			passport.authenticate('local', 
 				{
-					successRedirect: '/users',
-					failureRedirect: '/users',
+					successRedirect: '/',
+					failureRedirect: '/login',
 					failureFlash: true
 				}
 			)
@@ -36,7 +34,7 @@ module.exports = function(passport) {
 		.get((req, res) => {
 			req.logout();
 			req.session.destroy();
-			res.redirect('/users');
+			res.redirect('/login');
 		});
 
 	userRoutes.route('/register')
@@ -44,7 +42,7 @@ module.exports = function(passport) {
 			if (!req.user) {
 				res.render('register', {flash: req.flash()});
 			} else {
-				res.redirect('/users');
+				res.redirect('/');
 			}
 		})
 		.post(async (req,res,next) => {
@@ -70,7 +68,7 @@ module.exports = function(passport) {
 				await newUser.save();
 
 				req.flash('success', 'Registration sucessfully now please log in.');
-				res.redirect('/users');
+				res.redirect('/');
 			} catch(error) {
 				next(error);
 			}
