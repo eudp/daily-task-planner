@@ -3,16 +3,40 @@
 var express = require('express');
 var todoRoutes = express.Router();
 var Todo = require('../models/Todo');
+var ObjectId = require('mongoose').Types.ObjectId; 
+
+todoRoutes.use(function (req, res, next) {
+	if (!req.user){
+		res.sendStatus(401);
+	} else {
+		next();
+	}
+});
 
 todoRoutes.route('/all').get(function (req, res, next) {
 
-	Todo.find(function (err, todos) {
-		if (err) {
-			return next(new Error(err));
+	Todo.aggregate([
+		{ "$project": { 
+			"tasks": { 
+				"$filter": { 
+					"input": "$tasks", 
+					"as": "task", 
+					"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
+					[ new ObjectId(req.user._id)] ] }
+				} 
+			} 
+		}}
+	]).exec(
+		function (err, todos) {
+			if (err) {
+				return next(new Error(err));
+			}
+			
+			res.json(todos);
 		}
+	);
 
-		res.json(todos);
-	});
+
 });
 
 todoRoutes.route('/add').post(function (req, res) {
@@ -26,7 +50,8 @@ todoRoutes.route('/add').post(function (req, res) {
 			"$push": {
 				tasks: {
 					text: req.body.text,
-					done: false
+					done: false,
+					idUser: req.user._id
 				}
 			}
 		},
@@ -38,7 +63,7 @@ todoRoutes.route('/add').post(function (req, res) {
 			if (error) {
 				res.status(400).send('Unable to create todo');
 			}
-			res.status(200).json(todo);
+			res.json(todo);
 		}
 	);
 });
@@ -87,8 +112,8 @@ todoRoutes.route('/update').post(function (req, res, next) {
 			if (error) {
 				res.status(400).send('Unable to update todo');
 			}
-			res.status(200).json(todo);
-		}
+			res.json(todo);
+		} 
 	);
 });
 
