@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 var task = new mongoose.Schema({
 	idUser: mongoose.Schema.Types.ObjectId,
-	nameUser: String,
 	text: String,
 	note: String,
 	done: Boolean
