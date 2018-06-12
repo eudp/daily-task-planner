@@ -17,14 +17,11 @@ const userSchema = Joi.object().keys({
 module.exports = function(passport) {
 
 	userRoutes.route('/login')
-		.get((req, res, next) => {
-			res.render('login', {flash: req.flash()});
-		})
 		.post(	
 			passport.authenticate('local', 
 				{
 					successRedirect: '/',
-					failureRedirect: '/login',
+					failureRedirect: '/',
 					failureFlash: true
 				}
 			)
@@ -34,7 +31,7 @@ module.exports = function(passport) {
 		.get((req, res) => {
 			req.logout();
 			req.session.destroy();
-			res.redirect('/login');
+			res.redirect('/');
 		});
 
 	userRoutes.route('/register')

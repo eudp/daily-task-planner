@@ -5,7 +5,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/', function(req, res, next) {
 	if (!req.user) {
- 		res.redirect('/login');
+ 		res.render('login', {flash: req.flash()});
  	} else {
  		res.render('index', {user: req.user})
  	}
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/add', function(req, res, next) {
 	if (!req.user) {
- 		res.redirect('/login');
+ 		res.redirect('/');
  	} else {
  		res.render('add');
  	}
@@ -21,7 +21,7 @@ router.get('/add', function(req, res, next) {
 
 router.get('/list', function(req, res, next) {
 	if (!req.user) {
- 		res.redirect('/login');
+ 		res.redirect('/');
  	} else {
 
 		Todo.aggregate([
