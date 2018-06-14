@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-require('./passport')(app);
+var passport = require('./passport')(app);
 
 app.use('/', indexRouter);
 app.use('/', userRouter(passport));
