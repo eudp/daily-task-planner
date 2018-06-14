@@ -19,31 +19,33 @@ router.get('/add', function(req, res, next) {
  	}
 });
 
-router.get('/list', function(req, res, next) {
+router.get('/list', async (req, res, next) => {
 	if (!req.user) {
  		res.redirect('/');
  	} else {
 
-		Todo.aggregate([
-			{ "$project": { 
-				"tasks": { 
-					"$filter": { 
-						"input": "$tasks", 
-						"as": "task", 
-						"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
-						[ new ObjectId(req.user._id)] ] }
+ 		try {
+
+			const todos = await Todo.aggregate([
+				{ "$project": { 
+					"tasks": { 
+						"$filter": { 
+							"input": "$tasks", 
+							"as": "task", 
+							"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
+							[ new ObjectId(req.user._id)] ] }
+						} 
 					} 
-				} 
-			}}
-		]).exec(
-			function (err, todos) {
-				if (err) {
-					return next(new Error(err));
-				}
+				}}
+			]).exec();
+
 				
-				res.render('list', {todos});
-			}
-		);
+			res.render('list', {todos});
+			
+
+		} catch (err) {
+			return next(new Error(err));
+		}
  		
  	}
 });

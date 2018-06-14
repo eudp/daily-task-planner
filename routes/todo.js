@@ -13,108 +13,117 @@ todoRoutes.use(function (req, res, next) {
 	}
 });
 
-todoRoutes.route('/all').get(function (req, res, next) {
+todoRoutes.route('/all').get(async (req, res, next) => {
 
-	Todo.aggregate([
-		{ "$project": { 
-			"tasks": { 
-				"$filter": { 
-					"input": "$tasks", 
-					"as": "task", 
-					"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
-					[ new ObjectId(req.user._id)] ] }
+	try {
+
+		const todos = await Todo.aggregate([
+			{ "$project": { 
+				"tasks": { 
+					"$filter": { 
+						"input": "$tasks", 
+						"as": "task", 
+						"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
+						[ new ObjectId(req.user._id)] ] }
+					} 
 				} 
-			} 
-		}}
-	]).exec(
-		function (err, todos) {
-			if (err) {
-				return next(new Error(err));
-			}
-			
-			res.json(todos);
-		}
-	);
+			}}
+		]).exec();
+
+				
+		res.json(todos);
+	
+		
+	} catch (err) {
+		return next(new Error(err));
+	}
 
 
 });
 
-todoRoutes.route('/add').post(function (req, res) {
+todoRoutes.route('/add').post(async (req, res, next) => {
 
-	Todo.findOneAndUpdate(
-		{
-			//format date is month/day/year
-			date: Math.floor(new Date(req.body.date).getTime() / 1000)
-		},
-		{
-			"$push": {
-				tasks: {
-					text: req.body.text,
-					done: false,
-					idUser: req.user._id
+	try {
+
+		const todo = await Todo.findOneAndUpdate(
+			{
+				//format date is month/day/year
+				date: Math.floor(new Date(req.body.date).getTime() / 1000)
+			},
+			{
+				"$push": {
+					tasks: {
+						text: req.body.text,
+						done: false,
+						idUser: req.user._id
+					}
+				}
+			},
+			{
+				upsert: true,
+				new: true
+			}
+		).exec();
+
+		res.json(todo);
+
+	} catch (err) {
+		res.status(400).send('Unable to create todo');
+	}
+});
+
+todoRoutes.route('/delete').post(async (req, res, next) => {
+
+	try {
+
+		const todo = await Todo.findOneAndUpdate(
+			{
+				//format date is month/day/year
+				date: Math.floor(new Date(req.body.date).getTime() / 1000)
+			},
+			{
+				"$pull": {
+					tasks: {
+						_id: req.body.id,
+					}
 				}
 			}
-		},
-		{
-			upsert: true,
-			new: true
-		},
-		function (error, todo) {
-			if (error) {
-				res.status(400).send('Unable to create todo');
-			}
-			res.json(todo);
-		}
-	);
+		).exec();
+
+		res.json('Succesfully removed');
+
+	} catch (err) {
+		return next(new Error('Todo was not found'));
+	}
+
+
 });
 
-todoRoutes.route('/delete').post(function (req, res, next) {
+todoRoutes.route('/update').post(async (req, res, next) => {
 
-	Todo.findOneAndUpdate(
-		{
-			//format date is month/day/year
-			date: Math.floor(new Date(req.body.date).getTime() / 1000)
-		},
-		{
-			"$pull": {
-				tasks: {
-					_id: req.body.id,
+	try {
+
+		const todo = await Todo.findOneAndUpdate(
+			{
+				//format date is month/day/year
+				date: Math.floor(new Date(req.body.date).getTime() / 1000),
+				"tasks._id": req.body.id
+			},
+			{
+				"$set" : {
+					"tasks.$.text" : req.body.text,
+					"tasks.$.done" : req.body.done
 				}
+			},
+			{
+				new: true
 			}
-		},
-		function (error, todo) {
-			if (error) {
-				return next(new Error('Todo was not found'));
-			}
-			res.json('Succesfully removed');
-		}
-	);
-});
+		).exec();
 
-todoRoutes.route('/update').post(function (req, res, next) {
-
-	Todo.findOneAndUpdate(
-		{
-			//format date is month/day/year
-			date: Math.floor(new Date(req.body.date).getTime() / 1000),
-			"tasks._id": req.body.id
-		},
-		{
-			"$set" : {
-				"tasks.$.text" : req.body.text,
-				"tasks.$.done" : req.body.done
-			}
-		},
-		{
-			new: true
-		},
-		function (error, todo) {
-			if (error) {
-				res.status(400).send('Unable to update todo');
-			}
-			res.json(todo);
-		} 
-	);
+		res.json(todo);
+	} catch (err) {
+		res.status(400).send('Unable to update todo');
+	}
 });
 
 module.exports = todoRoutes;

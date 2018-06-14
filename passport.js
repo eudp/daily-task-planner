@@ -18,42 +18,52 @@ module.exports = (app) => {
 
 	app.use(flash());
 	
-	passport.serializeUser(function(user, done) {
+	passport.serializeUser((user, done) => {
 		console.log(`serializing user: `, user);
 		done(null, user._id);
 	});
 
-	passport.deserializeUser(function(id, done) {
-		User.findById(id)
-			.then(function(user) {
-				console.log(`deserializing user:`, user);
-				done(null, user);
-			})
-			.catch(function(err) {
-				done(err);
-			})
+	passport.deserializeUser(async (id, done) => {
+
+		try { 
+
+			const user = await User.findById(id).exec();
+	
+			console.log(`deserializing user:`, user);
+			done(null, user);
+
+		} catch (err) {
+			done(err)
+		}
 	});
 
 	passport.use(new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password'
 	},
-	(email, password, done) => {
+	async (email, password, done) => {
 		const errorMsg = 'Invalid email or password';
-		User.findOne({email})
-			.then(user => {
 
-				if (!user) {
-					return done(null, false, {message:errorMsg});
-				}
+		try {
 
-				return user.validatePassword(password)
-					.then(isMatch => done(null, isMatch ? user : false, isMatch ? null : {message: errorMsg}));
-			})
-			.catch(done);
+			const user = await User.findOne({email}).exec();
+	
+			if (!user) {
+				return done(null, false, {message:errorMsg});
+			}
+
+			return user.validatePassword(password)
+				.then(isMatch => done(null, isMatch ? user : false, isMatch ? null : {message: errorMsg}));
+				
+
+		} catch (err) {
+			done(err);
+		}
 	}));
 
 	app.use(passport.initialize());
 
 	app.use(passport.session());
+
+	return passport;
 }

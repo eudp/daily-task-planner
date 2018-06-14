@@ -28,21 +28,21 @@ module.exports = function(passport) {
 		);
 
 	userRoutes.route('/logout')
-		.get((req, res) => {
+		.get((req, res, next) => {
 			req.logout();
 			req.session.destroy();
 			res.redirect('/');
 		});
 
 	userRoutes.route('/register')
-		.get((req,res) => {
+		.get((req, res, next) => {
 			if (!req.user) {
 				res.render('register', {flash: req.flash()});
 			} else {
 				res.redirect('/');
 			}
 		})
-		.post(async (req,res,next) => {
+		.post(async (req, res, next) => {
 			try {
 				const result = Joi.validate(req.body, userSchema);
 
@@ -66,8 +66,8 @@ module.exports = function(passport) {
 
 				req.flash('success', 'Registration sucessfully now please log in.');
 				res.redirect('/');
-			} catch(error) {
-				next(error);
+			} catch(err) {
+				next(err);
 			}
 		});
 
