@@ -1,6 +1,22 @@
-var User = require('../models/User');
+const session = require('express-session');
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
+var User = require('./models/User');
 
-module.exports = (passport, LocalStrategy) => {
+module.exports = (app) => {
+
+	app.use(cookieParser());
+
+	app.use(session({
+		cookie: { maxAge: 60000},
+		secret: 'keyboard cat',
+		saveUninitialized: false,
+		resave: false
+	}));
+
+	app.use(flash());
 	
 	passport.serializeUser(function(user, done) {
 		console.log(`serializing user: `, user);
@@ -36,4 +52,8 @@ module.exports = (passport, LocalStrategy) => {
 			})
 			.catch(done);
 	}));
+
+	app.use(passport.initialize());
+
+	app.use(passport.session());
 }
