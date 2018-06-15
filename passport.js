@@ -52,8 +52,9 @@ module.exports = (app) => {
 				return done(null, false, {message:errorMsg});
 			}
 
-			return await user.validatePassword(password)
-				.then(isMatch => done(null, isMatch ? user : false, isMatch ? null : {message: errorMsg}));
+			const isMatch =  await user.validatePassword(password);
+
+			done(null, isMatch ? user : false, isMatch ? null : {message: errorMsg});
 
 		} catch(err) {
 			done(err);
