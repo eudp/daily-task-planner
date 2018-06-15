@@ -9,7 +9,7 @@ todoRoutes.use(function (req, res, next) {
 	if (!req.user){
 		res.sendStatus(401);
 	} else {
-		next();
+		return next();
 	}
 });
 
@@ -68,7 +68,8 @@ todoRoutes.route('/add').post(async (req, res, next) => {
 		res.json(todo);
 
 	} catch (err) {
-		res.status(400).send('Unable to create todo');
+		//res.status(400).send('Unable to create todo');
+		return next(new Error(err));
 	}
 });
 
@@ -93,7 +94,7 @@ todoRoutes.route('/delete').post(async (req, res, next) => {
 		res.json('Succesfully removed');
 
 	} catch (err) {
-		return next(new Error('Todo was not found'));
+		return next(new Error(err));
 	}
 
 
@@ -122,7 +123,8 @@ todoRoutes.route('/update').post(async (req, res, next) => {
 
 		res.json(todo);
 	} catch (err) {
-		res.status(400).send('Unable to update todo');
+		//res.status(400).send('Unable to update todo');
+		return next(new Error(err));
 	}
 });
 

@@ -61,13 +61,13 @@ module.exports = function(passport) {
 
 				delete result.value.confirmationPassword;
 
-				const newUser = await new User(result.value);
+				const newUser = new User(result.value);
 				await newUser.save();
 
 				req.flash('success', 'Registration sucessfully now please log in.');
 				res.redirect('/');
 			} catch(err) {
-				next(err);
+				return next(new Error(err));
 			}
 		});
 

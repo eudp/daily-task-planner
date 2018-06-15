@@ -26,6 +26,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.pre('save', async function(next) {
 	const user = this;
 
+	// only hash the password if it has changed or is new
 	if (!user.isModified('password')) {
 		return next();
 	}
@@ -40,7 +41,7 @@ UserSchema.pre('save', async function(next) {
 		next();
 
 	} catch(error) {
-		throw new Error('Hashing failed', error);
+		throw error;
 	}
 
 });
