@@ -38,7 +38,6 @@ todoRoutes.route('/all').get(async (req, res, next) => {
 		return next(new Error(err));
 	}
 
-
 });
 
 todoRoutes.route('/add').post(async (req, res, next) => {

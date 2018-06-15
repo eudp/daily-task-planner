@@ -52,11 +52,10 @@ module.exports = (app) => {
 				return done(null, false, {message:errorMsg});
 			}
 
-			return user.validatePassword(password)
+			return await user.validatePassword(password)
 				.then(isMatch => done(null, isMatch ? user : false, isMatch ? null : {message: errorMsg}));
-				
 
-		} catch (err) {
+		} catch(err) {
 			done(err);
 		}
 	}));

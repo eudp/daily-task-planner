@@ -46,7 +46,6 @@ router.get('/list', async (req, res, next) => {
 		} catch (err) {
 			return next(new Error(err));
 		}
- 		
  	}
 });
 
