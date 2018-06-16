@@ -1,9 +1,7 @@
-'use strict';
-
-var express = require('express');
-var userRoutes = express.Router();
-var Joi  = require('joi');
-var User = require('../models/User');
+const express = require('express');
+const userRoutes = express.Router();
+const Joi  = require('joi');
+const User = require('../models/User');
 
 // Validation schema for Joi
 

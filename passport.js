@@ -1,9 +1,9 @@
 const session = require('express-session');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var flash = require('connect-flash');
-var User = require('./models/User');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
+const User = require('./models/User');
 
 module.exports = (app) => {
 

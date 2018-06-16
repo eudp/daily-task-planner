@@ -1,17 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-var mongoConfig = require('./mongoConfig');
+const mongoConfig = require('./mongoConfig');
 
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/users');
-var todoRouter = require('./routes/todo');
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/users');
+const todoRouter = require('./routes/todo');
 
-var app = express();
+const app = express();
 
 mongoose.connect(mongoConfig.DB);
 
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-var passport = require('./passport')(app);
+const passport = require('./passport')(app);
 
 app.use('/', indexRouter);
 app.use('/', userRouter(passport));

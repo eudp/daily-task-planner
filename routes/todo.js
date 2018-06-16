@@ -1,7 +1,7 @@
-var express = require('express');
-var todoRoutes = express.Router();
-var Todo = require('../models/Todo');
-var ObjectId = require('mongoose').Types.ObjectId; 
+const express = require('express');
+const todoRoutes = express.Router();
+const Todo = require('../models/Todo');
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 todoRoutes.use((req, res, next) => {
 	if (!req.user){

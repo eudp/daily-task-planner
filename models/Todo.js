@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Task = new mongoose.Schema({
+const Task = new mongoose.Schema({
 	idUser: mongoose.Schema.Types.ObjectId,
 	text: String,
 	note: String,
 	done: Boolean
 });
 
-var Todo = new mongoose.Schema({
+const Todo = new mongoose.Schema({
 	date: Number,
 	tasks:[Task]
 },
