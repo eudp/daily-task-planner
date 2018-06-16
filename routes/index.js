@@ -3,7 +3,7 @@ var router = express.Router();
 var Todo = require('../models/Todo');
 var ObjectId = require('mongoose').Types.ObjectId; 
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
 	if (!req.user) {
  		res.render('login', {flash: req.flash()});
  	} else {
@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
  	}
 });
 
-router.get('/add', function(req, res, next) {
+router.get('/add', (req, res, next) => {
 	if (!req.user) {
  		res.redirect('/');
  	} else {

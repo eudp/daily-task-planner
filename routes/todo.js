@@ -1,11 +1,9 @@
-'use strict';
-
 var express = require('express');
 var todoRoutes = express.Router();
 var Todo = require('../models/Todo');
 var ObjectId = require('mongoose').Types.ObjectId; 
 
-todoRoutes.use(function (req, res, next) {
+todoRoutes.use((req, res, next) => {
 	if (!req.user){
 		res.sendStatus(401);
 	} else {
@@ -30,9 +28,7 @@ todoRoutes.route('/all').get(async (req, res, next) => {
 			}}
 		]).exec();
 
-				
 		res.json(todos);
-	
 		
 	} catch (err) {
 		return next(new Error(err));
