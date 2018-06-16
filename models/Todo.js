@@ -1,15 +1,15 @@
 var mongoose = require('mongoose');
 
-var task = new mongoose.Schema({
+var Task = new mongoose.Schema({
 	idUser: mongoose.Schema.Types.ObjectId,
 	text: String,
 	note: String,
 	done: Boolean
 });
 
-var todo = new mongoose.Schema({
+var Todo = new mongoose.Schema({
 	date: Number,
-	tasks:[task]
+	tasks:[Task]
 },
 
 	{
@@ -18,4 +18,4 @@ var todo = new mongoose.Schema({
 	
 );
 
-module.exports = mongoose.model('Todo', todo);
+module.exports = mongoose.model('Todo', Todo);
