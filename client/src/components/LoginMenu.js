@@ -1,25 +1,67 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import IconMenu from '@material-ui/core/IconMenu';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/core/svg-icons/navigation/more-vert';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const LoginMenu = (props) => {
-	const {onLogout, username, ...otherProps} = props;
+class LoginMenu extends Component {
+	state = {
+		anchorEl: null,
+	}
 
-	return (
-		<IconMenu
-			{...otherProps}
-			iconButtonElement={
-				<IconButton><MoreVertIcon /></IconButton>
-			}
-			targetOrigin={{horizontal: 'right', vertical: 'top'}}
-			anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-		>
-			<MenuItem primaryText={username} />
-			<MenuItem primaryText="Log out" onClick={onLogout} />
-		</IconMenu>
-	);
-};
+	handleClick = event => {
+		this.setState({
+			anchorEl: event.currentTarget
+		});
+	}
+
+	handleClose = () => {
+		this.setState({
+			anchorEl: null
+		});
+	}
+
+	render() {
+
+		const {onLogout, username, ...otherProps} = this.props;
+		const { anchorEl } = this.state;
+
+		return (
+			<Fragment>
+				<IconButton
+					aria-label="More"
+					aria-owns={anchorEl ? 'long-menu' : null}
+					aria-hashpopup="true"
+					onClick={this.handleClick}
+				>
+					<MoreVertIcon />
+				</IconButton>
+
+				<Menu 
+					{...otherProps} 
+					id="long-menu"
+					anchorEl={anchorEl}
+					open={Boolean(anchorEl)}
+					onClose={this.handleClose}
+					anchorOrigin={{
+	          vertical: 'top',
+	          horizontal: 'right',
+	        }}
+	        transformOrigin={{
+	          vertical: 'top',
+	          horizontal: 'right',
+	        }}
+				>
+					<MenuItem>
+						{username}
+					</MenuItem>
+					<MenuItem onClick={onLogout} >
+						Log out
+					</MenuItem>
+				</Menu>
+			</Fragment>
+		);
+	}
+}
 
 export default LoginMenu;

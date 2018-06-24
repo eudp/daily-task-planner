@@ -1,8 +1,10 @@
 import React from 'react';
-import FlatButton from '@material-ui/core/FlatButton';
+import Button from '@material-ui/core/Button';
 
 const LoginButton = (props) => (
-	<FlatButton label="Log in" onClick={props.onClick} />
+	<Button variant="contained" color="primary" onClick={props.onClick}>
+		Log in
+	</Button>
 );
 
 export default LoginButton;
