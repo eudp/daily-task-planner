@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Roter, Route, Switch } from 'react-router-dom';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 
@@ -29,7 +28,6 @@ class App extends Component {
 		const { user } = this.props;
 		return (
 			<Router>
-				<MuiThemeProvider>
 					<Fragment>
 						<Navbar
 							user={user}
@@ -41,7 +39,6 @@ class App extends Component {
 							<Route component={NotFoundPage} />
 						</Switch>
 					</Fragment>
-				</MuiThemeProvider>
 			</Router>
 		);
 	}
