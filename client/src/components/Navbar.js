@@ -12,9 +12,11 @@ import { update } from '../services/withUser';
 const Navbar = (props) => {
 	const { user } = props;
 	const username = user ? user.username : null;
+
 	const handleLogIn = () => {
 		props.history.push('/login');
 	};
+
 	const handleLogOut = () => {
 		axios.delete('/api/auth')
 			.then(() => {
@@ -35,7 +37,8 @@ const Navbar = (props) => {
 				{user ?
 					<LoginMenu username={username} onLogOut={handleLogOut} />
 					: <LoginButton onClick={handleLogIn} />}
-		/>
+			</Toolbar>
+		</AppBar>
 	);
 };
 
