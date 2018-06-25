@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import RaisedButton from '@material-ui/core/RaisedButton';
 
 class CreateAccountPage extends Component {
 	state = {
@@ -64,25 +64,28 @@ class CreateAccountPage extends Component {
 							}
 							<div>
 								<TextField
+									required
+									id="username"
+									label="Username"
 									name="username"
-									hintText="Username"
-									floatingLabelText="Username"
 									onChange={this.handleInputChanged}
+									margin="normal"
 								/>
 							</div>
 							<div>
 								<TextField
+									required
+									id="password"
+									label="Password"
 									name="password"
-									hintText="Password"
-									floatingLabelText="Password"
 									type="password"
 									onChange={this.handleInputChanged}
 								/>
 							</div>
 							<div>
-								<RaisedButton primary type="submit">
+								<Button variant="raised" color="primary" type="submit">
 									Create Account
-								</RaisedButton>
+								</Button>
 							</div>
 						</form>
 					</Col>
