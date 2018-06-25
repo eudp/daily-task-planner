@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import RaisedButton from '@material-ui/core/Button';
 import { update } from '../services/withUser';
 
 class LoginPage extends Component {
@@ -55,25 +55,27 @@ class LoginPage extends Component {
 							}
 							<div>
 								<TextField
+									required
+									id="username"
+									label="Username"
 									name="username"
-									hintText="Username"
-									floatingLabelText="Username"
 									onChange={this.handleInputChanged}
 								/>
 							</div>
 							<div>
 								<TextField
+									required
+									id="password"
+									label="Password"
 									name="password"
-									hintText="Password"
-									floatingLabelText="Password"
 									type="password"
 									onChange={this.handleInputChanged}
 								/>
 							</div>
 							<div>
-								<RaisedButton primary type="submit">
+								<Button variant="raised" color="primary" type="submit">
 									Log In
-								</RaisedButton>
+								</Button>
 							</div>
 							<p>
 								or
