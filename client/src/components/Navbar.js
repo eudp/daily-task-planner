@@ -3,6 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import LoginButton from './LoginButton';
 import LoginMenu from './LoginMenu';
@@ -32,7 +33,7 @@ const Navbar = (props) => {
 		<AppBar position="static">
 			<Toolbar>
 				<Typography variant="title" color="inherit">
-					PassportJS Example
+					To-Do
 				</Typography>
 				{user ?
 					<LoginMenu username={username} onLogOut={handleLogOut} />
