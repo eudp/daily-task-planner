@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import RaisedButton from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import { update } from '../services/withUser';
 
 class LoginPage extends Component {

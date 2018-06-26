@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import TextField from '@material-ui/core/TextField';
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 
 class CreateAccountPage extends Component {
 	state = {

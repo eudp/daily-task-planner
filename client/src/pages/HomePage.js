@@ -1,7 +1,5 @@
 import axios from 'axios';
 import React, { Component, Fragment } from 'react';
-import { List, ListItem } from 'material-ui/List';
-import { withUser } from '../services/withUser';
 
 class HomePage extends Component {
 	state = {
@@ -38,9 +36,9 @@ class HomePage extends Component {
 					<div>
 						Welcome back, {user.username}!
 
-						<List>
-							{stuff.map((s, i) => <ListItem key={i} primaryText={s} />)}
-						</List>
+					
+							{stuff.map((s, i) => <div key={i} primaryText={s} />)}
+						
 					</div>
 				}
 				{user && !stuff &&
@@ -54,4 +52,4 @@ class HomePage extends Component {
 	}
 }
 
-export default withUser(HomePage);
+export default HomePage;
