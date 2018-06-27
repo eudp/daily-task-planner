@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const passport = require('./passport')(app);
 
 app.use('/', indexRouter);
-app.use('/', userRouter(passport));
+app.use('/api', userRouter(passport));
 app.use('/api', todoRouter);
 
 // catch 404 and forward to error handler
