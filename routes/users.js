@@ -1,5 +1,5 @@
 const express = require('express');
-const userRoutes = express.Router();
+const userRouter = express.Router();
 const Joi  = require('joi');
 const User = require('../models/User');
 
@@ -23,7 +23,7 @@ function getCurrentUser(req, res) {
 
 module.exports = function(passport) {
 
-	userRoutes.route('/auth')
+	userRouter.route('/auth')
 		// GET to /api/auth will return current logged in user info
 		.get((req, res) => {
 			if (!req.user) {
@@ -55,7 +55,7 @@ module.exports = function(passport) {
 			});
 		});
 
-	userRoutes.route('/users')
+	userRouter.route('/users')
 		// POST to /api/users will create a new user
 		.post(async (req, res, next) => {
 			try {
@@ -90,5 +90,5 @@ module.exports = function(passport) {
 			}
 		});
 
-	return userRoutes;
+	return userRouter;
 }

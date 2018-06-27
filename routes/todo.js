@@ -1,9 +1,9 @@
 const express = require('express');
-const todoRoutes = express.Router();
+const todoRouter = express.Router();
 const Todo = require('../models/Todo');
 const ObjectId = require('mongoose').Types.ObjectId; 
 
-todoRoutes.use((req, res, next) => {
+todoRouter.use((req, res, next) => {
 	if (req.isAuthenticated()){
 		return next();
 	} 
@@ -14,7 +14,7 @@ todoRoutes.use((req, res, next) => {
 
 });
 
-todoRoutes.route('/task')
+todoRouter.route('/task')
 	// GET to /api/task will return tasks
 	.get(async (req, res, next) => {
 
@@ -124,4 +124,4 @@ todoRoutes.route('/task')
 
 	});
 
-module.exports = todoRoutes;
+module.exports = todoRouter;
