@@ -12,58 +12,79 @@ const userSchema = Joi.object().keys({
 	confirmationPassword: Joi.any().valid(Joi.ref('password')).required()
 });
 
+function getCurrentUser(req, res) {
+	
+	const { id, userName } = req.user;
+	res.json({
+		id, userName
+	});
+
+}
+
 module.exports = function(passport) {
 
-	userRoutes.route('/login')
-		.post(	
-			passport.authenticate('local', 
-				{
-					successRedirect: '/',
-					failureRedirect: '/',
-					failureFlash: true
-				}
-			)
-		);
+	userRoutes.route('/auth')
+		// GET to /api/auth will return current logged in user info
+		.get((req, res) => {
+			if (!req.user) {
+				return res.status(401).json({
+					message: 'You are not currently logged in.'
+				});
+			}
 
-	userRoutes.route('/logout')
-		.get((req, res, next) => {
+			getCurrentUser(req, res);
+		})
+		// POST to /api/auth with email and password will authenticate the user
+		.post(	
+			passport.authenticate('local'), (req, res) => {
+				if (!req.user) {
+					return res.status(401).json({
+						message: 'Invalid username or password.'
+					});
+				}
+
+				getCurrentUser(req,res);
+			}
+		)
+		// DELETE to /api/auth will log the user out
+		.delete((req,res) => {
 			req.logout();
 			req.session.destroy();
-			res.redirect('/');
+			res.json({
+				message: 'You have been logged out.'
+			});
 		});
 
-	userRoutes.route('/register')
-		.get((req, res, next) => {
-			if (!req.user) {
-				res.render('register', {flash: req.flash()});
-			} else {
-				res.redirect('/');
-			}
-		})
+	userRoutes.route('/users')
+		// POST to /api/users will create a new user
 		.post(async (req, res, next) => {
 			try {
 				const result = Joi.validate(req.body, userSchema);
 
 				if (result.error) {
-					req.flash('error', 'Data entered is not valid. Please try again.');
-					res.render('register', {flash: req.flash()});
-					return;
+					res.status(400).json({
+						message: 'Data entered is not valid. Please try again.'
+					});
 				}
 
 				const user = await User.findOne({'email' : result.value.email });
 				if (user) {
-					req.flash('error', 'Email is already in use');
-					res.render('register', {flash: req.flash()});
-					return;
+					res.status(400).json({
+						message: 'Email is already in use.'
+					});
 				}
 
 				delete result.value.confirmationPassword;
 
 				const newUser = new User(result.value);
-				await newUser.save();
+				const userSaved = await newUser.save();
+				
+				const { id, userName } = userSaved;
 
-				req.flash('success', 'Registration sucessfully now please log in.');
-				res.redirect('/');
+				res.json({
+					id, userName
+				});
+
 			} catch(err) {
 				return next(new Error(err));
 			}
