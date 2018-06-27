@@ -62,14 +62,14 @@ module.exports = function(passport) {
 				const result = Joi.validate(req.body, userSchema);
 
 				if (result.error) {
-					res.status(400).json({
+					return res.status(400).json({
 						message: 'Data entered is not valid. Please try again.'
 					});
 				}
 
 				const user = await User.findOne({'email' : result.value.email });
 				if (user) {
-					res.status(400).json({
+					return res.status(400).json({
 						message: 'Email is already in use.'
 					});
 				}
