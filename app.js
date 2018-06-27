@@ -7,10 +7,6 @@ const bodyParser = require('body-parser');
 
 const mongoConfig = require('./mongoConfig');
 
-const indexRouter = require('./routes/index');
-const userRouter = require('./routes/users');
-const todoRouter = require('./routes/todo');
-
 const app = express();
 
 mongoose.connect(mongoConfig.DB);
@@ -24,9 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const passport = require('./passport')(app);
 
-app.use('/', indexRouter);
-app.use('/api', userRouter(passport));
-app.use('/api', todoRouter);
+app.use(require('./routes')(passport));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
