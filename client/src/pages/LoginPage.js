@@ -57,7 +57,7 @@ class LoginPage extends Component {
 								<TextField
 									required
 									id="email"
-									label="Username"
+									label="Email"
 									name="email"
 									onChange={this.handleInputChanged}
 								/>
