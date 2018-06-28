@@ -1,26 +1,26 @@
 const express = require('express');
-const todoRouter = express.Router();
+const tasksRouter = express.Router();
 const Todo = require('../models/Todo');
 const ObjectId = require('mongoose').Types.ObjectId; 
 
-todoRouter.use((req, res, next) => {
+tasksRouter.use((req, res, next) => {
 	if (req.isAuthenticated()){
 		return next();
 	} 
 
-	return res.status(403).json({
+	res.status(403).json({
 		message: 'You are not currently logged in.'
 	});
 
 });
 
-todoRouter.route('/task')
+tasksRouter.route('/task')
 	// GET to /api/task will return tasks
 	.get(async (req, res, next) => {
 
 		try {
 
-			const todos = await Todo.aggregate([
+			const tasks = await Todo.aggregate([
 				{ "$project": { 
 					"tasks": { 
 						"$filter": { 
@@ -33,7 +33,7 @@ todoRouter.route('/task')
 				}}
 			]).exec();
 
-			res.json(todos);
+			res.json(tasks);
 			
 		} catch (err) {
 			return next(new Error(err));
@@ -45,7 +45,7 @@ todoRouter.route('/task')
 
 		try {
 
-			const todo = await Todo.findOneAndUpdate(
+			const tasks = await Todo.findOneAndUpdate(
 				{
 					//format date is month/day/year
 					date: Math.floor(new Date(req.body.date).getTime() / 1000)
@@ -65,7 +65,7 @@ todoRouter.route('/task')
 				}
 			).exec();
 
-			res.json(todo);
+			res.json(tasks);
 
 		} catch (err) {
 			return next(new Error(err));
@@ -77,7 +77,7 @@ todoRouter.route('/task')
 
 		try {
 
-			const todo = await Todo.findOneAndUpdate(
+			const tasks = await Todo.findOneAndUpdate(
 				{
 					date: Math.floor(new Date(req.body.date).getTime() / 1000),
 					"tasks._id": req.body.id
@@ -93,7 +93,8 @@ todoRouter.route('/task')
 				}
 			).exec();
 
-			res.json(todo);
+			res.json(tasks);
+			
 		} catch (err) {
 			return next(new Error(err));
 		}
@@ -103,7 +104,7 @@ todoRouter.route('/task')
 
 		try {
 
-			const todo = await Todo.findOneAndUpdate(
+			const tasks = await Todo.findOneAndUpdate(
 				{
 					date: Math.floor(new Date(req.body.date).getTime() / 1000)
 				},
@@ -116,7 +117,9 @@ todoRouter.route('/task')
 				}
 			).exec();
 
-			res.json('Succesfully removed');
+			res.json({
+				message: 'Succesfully removed'
+			});
 
 		} catch (err) {
 			return next(new Error(err));
@@ -124,4 +127,4 @@ todoRouter.route('/task')
 
 	});
 
-module.exports = todoRouter;
+module.exports = tasksRouter;
