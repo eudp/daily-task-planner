@@ -4,7 +4,7 @@ import { withUser } from '../services/withUser';
 
 class HomePage extends Component {
 	state = {
-		stuff: null
+		tasks: null
 	}
 
 	componentDidMount() {
@@ -12,16 +12,17 @@ class HomePage extends Component {
 			return;
 		}
 
-		axios.get('/api/stuff')
+		axios.get('/api/task')
 			.then(res => {
 				this.setState({
-					stuff: res.data
+					tasks: res.data
 				});
+				console.log(res.data);
 			})
 			.catch(err => {
 				console.log(err);
 				this.setState({
-					stuff: []
+					tasks: []
 				});
 			});
 	}
@@ -29,21 +30,19 @@ class HomePage extends Component {
 	render() {
 
 		const { user } =  this.props;
-		const { stuff } = this.state;
-
+		const { tasks } = this.state;
 		return(
 			<Fragment>
-				{user && stuff &&
+				{user && tasks &&
 					<div>
-						Welcome back, {user.username}!
+						Welcome back, {user.userName}!
 
-					
-							{stuff.map((s, i) => <div key={i} primaryText={s} />)}
+							{tasks.map((s, i) => <div key={i} primaryText={s} />)}
 						
 					</div>
 				}
-				{user && !stuff &&
-					<div>Hold, on looking for your stuff...</div>
+				{user && !tasks &&
+					<div>Hold, on looking for your tasks...</div>
 				}
 				{!user &&
 					<div>Hey! I don't recognize you! Register and log in using the link above</div>
