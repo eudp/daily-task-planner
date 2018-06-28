@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const htmlRouter = express.Router;
+const htmlRouter = express.Router();
 
 htmlRouter.use(express.static("client/build"));
 
