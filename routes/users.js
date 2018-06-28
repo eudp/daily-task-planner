@@ -14,9 +14,9 @@ const userSchema = Joi.object().keys({
 
 function getCurrentUser(req, res) {
 	
-	const { id, userName } = req.user;
+	const { id, email } = req.user;
 	res.json({
-		id, userName
+		id, email
 	});
 
 }
