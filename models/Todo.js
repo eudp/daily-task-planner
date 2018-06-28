@@ -13,7 +13,7 @@ const Todo = new mongoose.Schema({
 },
 
 	{
-		collection: 'todos'
+		collection: 'todo'
 	}
 	
 );
