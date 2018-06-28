@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component, Fragment } from 'react';
+import { withUser } from '../services/withUser';
 
 class HomePage extends Component {
 	state = {
@@ -52,4 +53,4 @@ class HomePage extends Component {
 	}
 }
 
-export default HomePage;
+export default withUser(HomePage);
