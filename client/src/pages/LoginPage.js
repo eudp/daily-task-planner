@@ -8,7 +8,7 @@ import { update } from '../services/withUser';
 
 class LoginPage extends Component {
 	state = {
-		username: null,
+		email: null,
 		password: null
 	}
 
@@ -21,11 +21,11 @@ class LoginPage extends Component {
 	handleLogin = (event) => {
 		event.preventDefault();
 
-		const { username, password } = this.state;
+		const { email, password } = this.state;
 		const { history } = this.props;
 
 		axios.post('/api/auth', {
-			username, 
+			email, 
 			password
 		})
 			.then(user => {
@@ -34,7 +34,7 @@ class LoginPage extends Component {
 			})
 			.catch(err => {
 				this.setState({
-					error: err.response.status === 401 ? 'Invalid username or password.' : err.message
+					error: err.response.status === 401 ? 'Invalid email or password.' : err.message
 				});
 			});
 	}
@@ -56,9 +56,9 @@ class LoginPage extends Component {
 							<div>
 								<TextField
 									required
-									id="username"
+									id="email"
 									label="Username"
-									name="username"
+									name="email"
 									onChange={this.handleInputChanged}
 								/>
 							</div>
