@@ -12,7 +12,7 @@ import { update } from '../services/withUser';
 
 const Navbar = (props) => {
 	const { user } = props;
-	const username = user ? user.username : null;
+	const userName = user ? user.userName : null;
 
 	const handleLogIn = () => {
 		props.history.push('/login');
@@ -36,7 +36,7 @@ const Navbar = (props) => {
 					To-Do
 				</Typography>
 				{user ?
-					<LoginMenu username={username} onLogOut={handleLogOut} />
+					<LoginMenu userName={userName} onLogOut={handleLogOut} />
 					: <LoginButton onClick={handleLogIn} />}
 			</Toolbar>
 		</AppBar>

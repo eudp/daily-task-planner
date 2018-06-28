@@ -23,7 +23,7 @@ class LoginMenu extends Component {
 
 	render() {
 
-		const {onLogout, username, ...otherProps} = this.props;
+		const {onLogOut, userName, ...otherProps} = this.props;
 		const { anchorEl } = this.state;
 
 		return (
@@ -53,9 +53,9 @@ class LoginMenu extends Component {
 	        }}
 				>
 					<MenuItem>
-						{username}
+						{userName}
 					</MenuItem>
-					<MenuItem onClick={onLogout} >
+					<MenuItem onClick={onLogOut} >
 						Log out
 					</MenuItem>
 				</Menu>
