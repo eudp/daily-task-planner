@@ -31,7 +31,7 @@ class LoginMenu extends Component {
 				<IconButton
 					aria-label="More"
 					aria-owns={anchorEl ? 'long-menu' : null}
-					aria-hashpopup="true"
+					aria-haspopup="true"
 					onClick={this.handleClick}
 				>
 					<MoreVertIcon />
