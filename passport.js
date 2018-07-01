@@ -10,7 +10,8 @@ module.exports = (app) => {
 	app.use(cookieParser());
 
 	app.use(session({
-		cookie: { maxAge: 60000},
+		rolling: true,
+		cookie: { maxAge: 20 * 60 * 1000},
 		secret: 'keyboard cat',
 		saveUninitialized: false,
 		resave: false
