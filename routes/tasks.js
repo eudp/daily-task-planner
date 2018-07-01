@@ -22,15 +22,17 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.aggregate([
 				{ "$project": { 
-					"tasks": { 
-						"$filter": { 
-							"input": "$tasks", 
-							"as": "task", 
-							"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
-							[ new ObjectId(req.user._id)] ] }
+						"date": "$date",
+						"tasks": { 
+							"$filter": { 
+								"input": "$tasks", 
+								"as": "task", 
+								"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
+								[ new ObjectId(req.user._id)] ] }
+							} 
 						} 
-					} 
-				}}
+					}
+				}
 			]).exec();
 
 			res.json(tasks);
