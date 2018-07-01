@@ -17,7 +17,6 @@ class HomePage extends Component {
 				this.setState({
 					tasks: res.data
 				});
-				console.log(res.data);
 			})
 			.catch(err => {
 				console.log(err);
@@ -37,7 +36,24 @@ class HomePage extends Component {
 					<div>
 						Welcome back, {user.userName}!
 
-							{tasks.map((s, i) => <div key={i} primaryText={s} />)}
+						{
+							tasks.map((currentValue, index) => 
+								
+								<div key={index}>
+									<h2>{currentValue.date}</h2>
+									{currentValue.tasks.length ? (
+										<ul>
+											{currentValue.tasks.map((currentValue, index) =>
+												<li key={index}>{currentValue.text}</li>
+											)}
+										</ul>
+									) : (
+										<p>Without tasks yet.</p>
+									)}
+							
+								</div>
+							)
+						}
 						
 					</div>
 				}
