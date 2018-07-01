@@ -11,7 +11,10 @@ module.exports = (app) => {
 
 	app.use(session({
 		rolling: true,
-		cookie: { maxAge: 20 * 60 * 1000},
+		cookie: { 
+			maxAge: 20 * 60 * 1000,
+			httpOnly: true
+		},
 		secret: 'keyboard cat',
 		saveUninitialized: false,
 		resave: false
