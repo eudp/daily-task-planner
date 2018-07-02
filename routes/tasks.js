@@ -82,7 +82,8 @@ tasksRouter.route('/task')
 			const tasks = await Todo.findOneAndUpdate(
 				{
 					date: Math.floor(new Date(req.body.date).getTime() / 1000),
-					"tasks._id": req.body.id
+					"tasks._id": req.body.id,
+					"tasks.idUser": req.user._id
 				},
 				{
 					"$set" : {
@@ -114,6 +115,7 @@ tasksRouter.route('/task')
 					"$pull": {
 						tasks: {
 							_id: req.body.id,
+							idUser: req.user._id
 						}
 					}
 				}
