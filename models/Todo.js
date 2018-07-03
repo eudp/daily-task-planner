@@ -8,7 +8,7 @@ const Task = new mongoose.Schema({
 });
 
 const Todo = new mongoose.Schema({
-	date: Number,
+	date: Date,
 	tasks:[Task]
 },
 
