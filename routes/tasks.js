@@ -21,8 +21,15 @@ tasksRouter.route('/task')
 		try {
 
 			const tasks = await Todo.aggregate([
-				{ "$project": { 
-						"date": "$date",
+				{	"$match": {
+						"date": {
+							"$gte": new Date("2017-01-01"),
+							"$lt": new Date("2019-01-01")
+						}
+					}
+				},
+				{	"$project": { 
+						"date": true,
 						"tasks": { 
 							"$filter": { 
 								"input": "$tasks", 
@@ -49,8 +56,8 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.findOneAndUpdate(
 				{
-					//format date is month/day/year
-					date: Math.floor(new Date(req.body.date).getTime() / 1000)
+					//format date is ISO 
+					date: new Date(req.body.date)
 				},
 				{
 					"$push": {
@@ -81,7 +88,7 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.findOneAndUpdate(
 				{
-					date: Math.floor(new Date(req.body.date).getTime() / 1000),
+					date: new Date(req.body.date),
 					"tasks._id": req.body.id,
 					"tasks.idUser": req.user._id
 				},
@@ -109,7 +116,7 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.findOneAndUpdate(
 				{
-					date: Math.floor(new Date(req.body.date).getTime() / 1000)
+					date: new Date(req.body.date)
 				},
 				{
 					"$pull": {
