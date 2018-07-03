@@ -1,7 +1,15 @@
 const express = require('express');
 const tasksRouter = express.Router();
 const Todo = require('../models/Todo');
-const ObjectId = require('mongoose').Types.ObjectId; 
+const ObjectId = require('mongoose').Types.ObjectId;
+const Joi = require('joi'); 
+
+// Validation schema for Joi
+
+const queryStringSchema = Joi.object().keys({
+	type: Joi.any().valid('d', 'w', 'm').required(),
+	date: Joi.date().iso().required()
+});
 
 tasksRouter.use((req, res, next) => {
 	if (req.isAuthenticated()){
@@ -15,15 +23,23 @@ tasksRouter.use((req, res, next) => {
 });
 
 tasksRouter.route('/task')
-	// GET to /api/task will return tasks
+	// GET to /api/task will return tasks according to a date and type of request
 	.get(async (req, res, next) => {
+
+		const result = Joi.validate(req.query, queryStringSchema);
+
+		if (result.error) {
+			return res.status(400).json({
+				message: 'URL request is not valid.'
+			});
+		}
 
 		try {
 
 			const tasks = await Todo.aggregate([
 				{	"$match": {
 						"date": {
-							"$gte": new Date("2017-01-01"),
+							"$gte": new Date("1970-01-01"),
 							"$lt": new Date("2019-01-01")
 						}
 					}
