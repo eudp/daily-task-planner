@@ -2,7 +2,13 @@ const express = require('express');
 const tasksRouter = express.Router();
 const Todo = require('../models/Todo');
 const ObjectId = require('mongoose').Types.ObjectId;
-const Joi = require('joi'); 
+const Joi = require('joi');
+const { addDays, 
+				subDays, 
+				endOfWeek, 
+				startOfWeek, 
+				endOfMonth, 
+				startOfMonth } = require('date-fns');
 
 // Validation schema for Joi
 
@@ -34,13 +40,30 @@ tasksRouter.route('/task')
 			});
 		}
 
+		let startDate;
+		let endDate;
+
+		switch(req.query.type) {
+			case 'd':
+				startDate = subDays(req.query.date, 2);
+				endDate = addDays(req.query.date, 2);
+				break;
+			case 'w':
+				startDate = startOfWeek(req.query.date, {weekStartsOn: 1});
+				endDate = endOfWeek(req.query.date, {weekStartsOn: 1});
+				break;
+			case 'm':
+				startDate = startOfMonth(req.query.date);
+				endDate = endOfMonth(req.query.date);
+		}
+
 		try {
 
 			const tasks = await Todo.aggregate([
 				{	"$match": {
 						"date": {
-							"$gte": new Date("1970-01-01"),
-							"$lt": new Date("2019-01-01")
+							"$gte": startDate,
+							"$lte": endDate
 						}
 					}
 				},
