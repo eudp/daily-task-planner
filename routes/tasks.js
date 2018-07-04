@@ -17,6 +17,13 @@ const queryStringSchema = Joi.object().keys({
 	date: Joi.date().iso().required()
 });
 
+const bodySchema = Joi.object().keys({
+	date: Joi.date().iso().required(),
+	text: Joi.string().max(100),
+	done: Joi.boolean(),
+	uid: Joi.any()
+});
+
 tasksRouter.use((req, res, next) => {
 	if (req.isAuthenticated()){
 		return next();
@@ -28,17 +35,35 @@ tasksRouter.use((req, res, next) => {
 
 });
 
+// Validation for body or query string
+
+tasksRouter.use((req, res, next) => {
+
+	let reqContent, schema;
+
+	if (req.method === 'GET') {
+		reqContent = req.query;
+		schema = queryStringSchema;
+	} else {
+		reqContent = req.body;
+		schema = bodySchema;
+	}
+
+	const result = Joi.validate(reqContent, schema);
+
+	if (!result.error) {
+		return next();
+	}
+
+	res.status(400).json({
+		message: 'URL request is not valid.'
+	});
+
+});
+
 tasksRouter.route('/task')
 	// GET to /api/task will return tasks according to a date and type of request
 	.get(async (req, res, next) => {
-
-		const result = Joi.validate(req.query, queryStringSchema);
-
-		if (result.error) {
-			return res.status(400).json({
-				message: 'URL request is not valid.'
-			});
-		}
 
 		let startDate;
 		let endDate;
@@ -95,7 +120,6 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.findOneAndUpdate(
 				{
-					//format date is ISO 
 					date: new Date(req.body.date)
 				},
 				{
