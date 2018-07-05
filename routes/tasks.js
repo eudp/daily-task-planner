@@ -137,7 +137,9 @@ tasksRouter.route('/task')
 				}
 			).exec();
 
-			res.json(tasks);
+			res.json({
+				message: 'Succesfully added'
+			});
 
 		} catch (err) {
 			return next(new Error(err));
@@ -166,7 +168,9 @@ tasksRouter.route('/task')
 				}
 			).exec();
 
-			res.json(tasks);
+			res.json({
+				message: 'Succesfully updated'
+			});
 			
 		} catch (err) {
 			return next(new Error(err));
