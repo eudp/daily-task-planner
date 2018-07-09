@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 class LoginMenu extends Component {
 	state = {
@@ -23,18 +24,19 @@ class LoginMenu extends Component {
 
 	render() {
 
-		const {onLogOut, userName, ...otherProps} = this.props;
+		const { classes, onLogOut, ...otherProps } = this.props;
 		const { anchorEl } = this.state;
 
 		return (
-			<Fragment>
+			<Fragment>		
 				<IconButton
 					aria-label="More"
 					aria-owns={anchorEl ? 'long-menu' : null}
 					aria-haspopup="true"
+					color="inherit"
 					onClick={this.handleClick}
 				>
-					<MoreVertIcon />
+					<AccountCircle />
 				</IconButton>
 
 				<Menu 
@@ -53,7 +55,7 @@ class LoginMenu extends Component {
 	        }}
 				>
 					<MenuItem>
-						{userName}
+						Profile
 					</MenuItem>
 					<MenuItem onClick={onLogOut} >
 						Log out
