@@ -6,7 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 class LoginMenu extends Component {
+
 	state = {
+		// The DOM element used to set the position of the menu
 		anchorEl: null,
 	}
 
@@ -31,7 +33,7 @@ class LoginMenu extends Component {
 			<Fragment>		
 				<IconButton
 					aria-label="More"
-					aria-owns={anchorEl ? 'long-menu' : null}
+					aria-owns={Boolean(anchorEl) ? 'long-menu' : null}
 					aria-haspopup="true"
 					color="inherit"
 					onClick={this.handleClick}
@@ -54,7 +56,7 @@ class LoginMenu extends Component {
 	          horizontal: 'right',
 	        }}
 				>
-					<MenuItem>
+					<MenuItem onClick={this.handleClose}>
 						Profile
 					</MenuItem>
 					<MenuItem onClick={onLogOut} >
