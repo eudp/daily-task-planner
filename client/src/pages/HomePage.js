@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -6,18 +7,24 @@ import { withUser } from '../services/withUser';
 
 import TodoList from '../components/TodoList';
 
+const styles = {
+	widthMainItem: {
+		maxWidth: '95% '
+	}
+}
+
 class HomePage extends Component {
 	
 	render() {
 
-		const { user } =  this.props;
+		const { user, classes } =  this.props;
 		
 		return(
 
-			<Grid container>
+			<Grid container justify="center">
 				{user &&
 
-					<Grid item xs={12}>
+					<Grid item xs={12} className={classes.widthMainItem}>
 						<TodoList/>
 					</Grid>
 
@@ -35,4 +42,4 @@ class HomePage extends Component {
 	}
 }
 
-export default withUser(HomePage);
+export default withStyles(styles)(withUser(HomePage));
