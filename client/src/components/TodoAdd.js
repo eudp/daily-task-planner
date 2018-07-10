@@ -15,7 +15,7 @@ const TodoAdd = (props) => (
 
   <Grid container spacing={24}>
  
-    <Grid item xs={12} className={props.classes.paddingAddForm} alignItems="center">
+    <Grid item xs={12} className={props.classes.paddingAddForm}>
       <TextField
         name="todo-add"
         label="What needs to be done?"
