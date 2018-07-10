@@ -41,7 +41,7 @@ class TodoList extends Component {
 		const { todo } = this.state;
 
 		return(
-			<Grid container spacing={24}>
+			<Grid container spacing={24} alignItems="center">
 				{!todo &&
 					<Grid item xs={12} >
 						<Typography component="p">
