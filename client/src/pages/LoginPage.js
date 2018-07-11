@@ -1,11 +1,19 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { update } from '../services/withUser';
+
+const styles = {
+  button: {
+    margin: '25px 0px',
+  },
+};
 
 class LoginPage extends Component {
 	state = {
@@ -41,57 +49,72 @@ class LoginPage extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		const { error } = this.state;
 
 		return (
-			<Grid fluid>
-				<Row>
-					<Col xs={6} xsOffset={3}>
-						<form onSubmit={this.handleLogin}>
-							<h1>Log In</h1>
-							{error &&
-								<div>
-									{error}
-								</div>
-							}
-							<div>
+
+			<Grid container justify="center">
+
+				<Grid item md={2} sm={4} xs={8}>
+
+					<form onSubmit={this.handleLogin}>
+
+						<Grid container>
+
+							<Grid item xs={12}>
+								<Typography variant="title" color="inherit" align="center">
+									Log In to Your Account
+								</Typography>
+								{error &&
+									<div>
+										{error}
+									</div>
+								}
+							</Grid>
+							<Grid item xs={12}>
 								<TextField
 									required
 									id="email"
 									label="Email"
 									name="email"
+									type="email"
+									margin="dense"
 									onChange={this.handleInputChanged}
+									fullWidth	
 								/>
-							</div>
-							<div>
+							</Grid>
+							<Grid item xs={12}>
 								<TextField
 									required
 									id="password"
 									label="Password"
 									name="password"
 									type="password"
+									margin="dense"
 									onChange={this.handleInputChanged}
+									fullWidth
 								/>
-							</div>
-							<div>
-								<Button variant="raised" color="primary" type="submit">
-									Log In
-								</Button>
-							</div>
-							<p>
-								or
-							</p>
-							<p>
-								<Link to="/create">
-									Register
-								</Link>
-							</p>
-						</form>
-					</Col>
-				</Row>
+							</Grid>
+						</Grid>
+						<Grid item xs={12}>
+							<Button variant="raised" color="primary" type="submit" fullWidth className={classes.button}>
+								Let's go!
+							</Button>
+						</Grid>
+						<Grid item xs={12}>
+							<Typography paragraph color="inherit" align="center">
+									or <Link to="/create">Register</Link>
+							</Typography>
+						</Grid>
+
+					</form>
+					
+				</Grid>
+
 			</Grid>
 		);
 	}
 }
 
-export default LoginPage;
+export default withStyles(styles)(LoginPage);
