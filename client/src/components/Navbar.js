@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,6 +18,10 @@ const styles = {
 	},
 	flex: {
 		flex: 1
+	},
+	titleLink: {
+		color: 'white',
+		textDecoration: 'none'
 	}
 };
 
@@ -45,9 +49,12 @@ const Navbar = (props) => {
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<Typography variant="title" color="inherit" className={classes.flex}>
-						Daily Task Planner {user ? `| ${user.userName}` : ``}
-					</Typography>
+						<Typography variant="title" color="inherit" className={classes.flex}>
+							<Link to="/" className={classes.titleLink}>
+								Daily Task Planner {user ? `| ${user.userName}` : ``}
+							</Link>
+						</Typography>
+					
 					{user ?
 						<LoginMenu onLogOut={handleLogOut} />
 						: <LoginButton onClick={handleLogIn} />}
