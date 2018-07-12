@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
 
-class NotFoundPage extends Component {
-	render() {
+const NotFoundPage = () => {
 		return (
-			<div>
-				Page not found.
-			</div>
+			<Typography variant="headline" align="center">
+				Page not found
+			</Typography>
 		);
-	}
 }
 
 export default NotFoundPage;
