@@ -42,7 +42,7 @@ const Navbar = (props) => {
 				console.log(err);
 			}
 		);
-	}
+	};
 
 	return (
 
