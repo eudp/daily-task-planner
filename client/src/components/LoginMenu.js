@@ -8,6 +8,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 class LoginMenu extends Component {
 
 	constructor(props) {
+		super(props);
+		
 		this.state = {
 			// The DOM element used to set the position of the menu
 			anchorEl: null,
