@@ -1,13 +1,23 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+const styles = {
+  button: {
+    margin: '25px 0px',
+  },
+};
+
 class CreateAccountPage extends Component {
 	state = {
-		username: null,
+		userName: null,
+		email: null,
 		password: null,
+		confirmationPassword: null,
 		error: null
 	}
 
@@ -17,26 +27,28 @@ class CreateAccountPage extends Component {
 		});
 	}
 
-	handleLogin = (event) => {
+	handleRegister = (event) => {
 		event.preventDefault();
 
-		const { username, password } = this.state;
+		const { userName, email, password, confirmationPassword } = this.state;
 		const { history } = this.props;
 
 		this.setState({
 			error: null
 		});
 
-		if(!username || !password) {
+		if(!userName || !password || !email) {
 			this.setState({
-				error: 'A username and password is required'
+				error: 'All the fields are required'
 			});
 			return;
 		}
 
 		axios.post('api/users', {
-			username,
-			password
+			userName,
+			email,
+			password,
+			confirmationPassword
 		})
 			.then(user => {
 				history.push('/login');
@@ -49,50 +61,89 @@ class CreateAccountPage extends Component {
 	}
 
 	render() {
+
+		const { classes } = this.props;
 		const { error } = this.state;
 
 		return (
-			<Grid fluid>
-				<Row>
-					<Col xs={6} xsOffset={3}>
-						<form onSubmit={this.handleLogin}>
-							<h1>Create Account</h1>
-							{error &&
-								<div>
-									{error}
-								</div>
-							}
-							<div>
+
+			<Grid container justify="center">
+				<Grid item md={2} sm={4} xs={8}>
+
+					<form onSubmit={this.handleRegister}>
+
+						<Grid container>
+							<Grid item xs={12}>
+								<Typography variant="title" color="inherit" align="center">
+									Create Account
+								</Typography>
+								{error &&
+									<Typography paragraph color="error" align="center">
+										{error}
+									</Typography>
+								}
+							</Grid>
+							<Grid item xs={12}>
 								<TextField
 									required
-									id="username"
-									label="Username"
-									name="username"
+									id="email"
+									label="Email"
+									name="email"
+									type="email"
+									margin="dense"
 									onChange={this.handleInputChanged}
-									margin="normal"
+									fullWidth	
 								/>
-							</div>
-							<div>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									required
+									id="userName"
+									label="Username"
+									name="userName"
+									type="text"
+									margin="dense"
+									onChange={this.handleInputChanged}
+									fullWidth	
+								/>
+							</Grid>
+							<Grid item xs={12}>
 								<TextField
 									required
 									id="password"
 									label="Password"
 									name="password"
 									type="password"
+									margin="dense"
 									onChange={this.handleInputChanged}
+									fullWidth
 								/>
-							</div>
-							<div>
-								<Button variant="raised" color="primary" type="submit">
-									Create Account
-								</Button>
-							</div>
-						</form>
-					</Col>
-				</Row>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									required
+									id="confirmationPassword"
+									label="Confirmation password"
+									name="confirmationPassword"
+									type="password"
+									margin="dense"
+									onChange={this.handleInputChanged}
+									fullWidth
+								/>
+							</Grid>
+						</Grid>
+						<Grid item xs={12}>
+							<Button variant="raised" color="primary" type="submit" fullWidth className={classes.button}>
+								Create Account
+							</Button>
+						</Grid>
+
+					</form>
+					
+				</Grid>
 			</Grid>
 		);
 	}
 }
 
-export default CreateAccountPage;
+export default withStyles(styles)(CreateAccountPage);
