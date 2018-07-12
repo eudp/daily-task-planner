@@ -5,13 +5,13 @@ import Typography from '@material-ui/core/Typography';
 
 import { withUser } from '../services/withUser';
 
-import TodoList from '../components/TodoList';
+import TodoList from '../components/todo/TodoList';
 
 const styles = {
 	widthMainItem: {
-		maxWidth: '95% '
+		maxWidth: '95%'
 	}
-}
+};
 
 class HomePage extends Component {
 	
@@ -31,8 +31,8 @@ class HomePage extends Component {
 				}
 				{!user &&
 					<Grid item xs={12}>
-						<Typography component="p">
-							Hey! I don't recognize you! Register and log in using the link above
+						<Typography variant="headline" align="center">
+							Hey! I don't recognize you! Log in using the link above
 						</Typography>
 					</Grid>
 				}
