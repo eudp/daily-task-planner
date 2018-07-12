@@ -55,21 +55,19 @@ class LoginPage extends Component {
 		return (
 
 			<Grid container justify="center">
-
 				<Grid item md={2} sm={4} xs={8}>
 
 					<form onSubmit={this.handleLogin}>
 
 						<Grid container>
-
 							<Grid item xs={12}>
 								<Typography variant="title" color="inherit" align="center">
 									Log In to Your Account
 								</Typography>
 								{error &&
-									<div>
+									<Typography paragraph color="error" align="center">
 										{error}
-									</div>
+									</Typography>
 								}
 							</Grid>
 							<Grid item xs={12}>
@@ -111,7 +109,6 @@ class LoginPage extends Component {
 					</form>
 					
 				</Grid>
-
 			</Grid>
 		);
 	}
