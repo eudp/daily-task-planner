@@ -16,9 +16,14 @@ const styles = {
 };
 
 class LoginPage extends Component {
-	state = {
-		email: null,
-		password: null
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			email: null,
+			password: null
+		};
 	}
 
 	handleInputChanged = (event) => {

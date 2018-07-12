@@ -13,8 +13,12 @@ import TodoAdd from './TodoAdd';
 
 class TodoList extends Component { 
 
-	state = {
-		todo: []
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			todo: []
+		};
 	}
 
 	componentDidMount() {
