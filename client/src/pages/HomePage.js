@@ -13,33 +13,31 @@ const styles = {
 	}
 };
 
-class HomePage extends Component {
+const HomePage = (props) => {
+
+	const { user, classes } = props;
 	
-	render() {
+	return(
 
-		const { user, classes } =  this.props;
-		
-		return(
+		<Grid container justify="center">
+			{user &&
 
-			<Grid container justify="center">
-				{user &&
+				<Grid item xs={12} className={classes.widthMainItem}>
+					<TodoList/>
+				</Grid>
 
-					<Grid item xs={12} className={classes.widthMainItem}>
-						<TodoList/>
-					</Grid>
+			}
+			{!user &&
+				<Grid item xs={12}>
+					<Typography variant="headline" align="center">
+						Hey! I don't recognize you! Log in using the link above
+					</Typography>
+				</Grid>
+			}
+		</Grid>
 
-				}
-				{!user &&
-					<Grid item xs={12}>
-						<Typography variant="headline" align="center">
-							Hey! I don't recognize you! Log in using the link above
-						</Typography>
-					</Grid>
-				}
-			</Grid>
+	);
 	
-		);
-	}
 }
 
 export default withStyles(styles)(withUser(HomePage));
