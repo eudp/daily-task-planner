@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
 const Task = new mongoose.Schema({
-	idUser: mongoose.Schema.Types.ObjectId,
+	date: Date,
 	text: String,
-	note: String,
 	done: Boolean
 });
 
 const Todo = new mongoose.Schema({
-	date: Date,
+	idUser: mongoose.Schema.Types.ObjectId,
 	tasks:[Task]
 },
 
