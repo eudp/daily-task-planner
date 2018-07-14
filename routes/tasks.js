@@ -1,7 +1,7 @@
 const express = require('express');
 const tasksRouter = express.Router();
+const ObjectId = require('mongoose').Types.ObjectId; 
 const Todo = require('../models/Todo');
-const ObjectId = require('mongoose').Types.ObjectId;
 const Joi = require('joi');
 const { addDays, 
 				subDays, 
@@ -86,21 +86,32 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.aggregate([
 				{	"$match": {
-						"date": {
-							"$gte": startDate,
-							"$lte": endDate
-						}
+						"idUser": req.user._id
 					}
 				},
 				{	"$project": { 
-						"date": true,
 						"tasks": { 
 							"$filter": { 
-								"input": "$tasks", 
-								"as": "task", 
-								"cond": { "$setIsSubset": [ [ "$$task.idUser" ], 
-								[ new ObjectId(req.user._id)] ] }
+								"input": "$tasks",  
+                "as": "task",
+								"cond":
+									{ "$and": [
+						        { "$gte": [ "$$task.date", startDate ] },
+						        { "$lte": [ "$$task.date", endDate ] }
+						      ] }
 							} 
+						} 
+					}
+				},
+				{ "$unwind": "$tasks" },
+				{ "$group" : { 
+						_id : "$tasks.date", 
+						tasks: { "$push": 
+									{ 
+										_id: "$tasks._id",
+										text: "$tasks.text",
+										done: "$tasks.done" 
+									}
 						} 
 					}
 				}
@@ -118,27 +129,33 @@ tasksRouter.route('/task')
 
 		try {
 
-			const tasks = await Todo.findOneAndUpdate(
+			const subdoc = {
+				_id: ObjectId(),
+				text: req.body.text,
+				done: false,
+				date: new Date(req.body.date)
+			};
+
+			const doc = await Todo.findOneAndUpdate(
 				{
-					date: new Date(req.body.date)
+					idUser: req.user._id
 				},
 				{
-					"$push": {
-						tasks: {
-							text: req.body.text,
-							done: false,
-							idUser: req.user._id
-						}
-					}
+					idUser: req.user._id,
+					"$push": { 
+            tasks: subdoc
+          } 
 				},
 				{
-					upsert: true,
-					new: true
+					upsert: true
 				}
 			).exec();
 
-			res.json({
-				message: 'Succesfully added'
+			res.status(201).json({
+				_id: subdoc._id,
+				text: subdoc.text,
+				done: subdoc.done,
+				date: subdoc.date
 			});
 
 		} catch (err) {
@@ -146,30 +163,29 @@ tasksRouter.route('/task')
 		}
 
 	})
-	// PUT to /api/task with id of task will update a task
+	// PUT to /api/task will update a task
 	.put(async (req, res, next) => {
 
 		try {
 
 			const tasks = await Todo.findOneAndUpdate(
 				{
-					date: new Date(req.body.date),
 					"tasks._id": req.body.id,
-					"tasks.idUser": req.user._id
+					"idUser": req.user._id
 				},
 				{
 					"$set" : {
 						"tasks.$.text" : req.body.text,
 						"tasks.$.done" : req.body.done
 					}
-				},
-				{
-					new: true
 				}
 			).exec();
 
 			res.json({
-				message: 'Succesfully updated'
+				_id: req.body.id,
+				text: req.body.text,
+				done: req.body.done,
+				date: new Date(req.body.date)
 			});
 			
 		} catch (err) {
@@ -183,13 +199,12 @@ tasksRouter.route('/task')
 
 			const tasks = await Todo.findOneAndUpdate(
 				{
-					date: new Date(req.body.date)
+					"idUser": req.user._id
 				},
 				{
 					"$pull": {
 						tasks: {
-							_id: req.body.id,
-							idUser: req.user._id
+							"_id": req.body.id,
 						}
 					}
 				}
