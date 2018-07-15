@@ -114,7 +114,8 @@ tasksRouter.route('/task')
 									}
 						} 
 					}
-				}
+				},
+				{ "$sort": { _id: 1} }
 			]).exec();
 
 			res.json(tasks);
