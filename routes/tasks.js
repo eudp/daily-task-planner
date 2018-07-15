@@ -21,7 +21,7 @@ const bodySchema = Joi.object().keys({
 	date: Joi.date().iso().required(),
 	text: Joi.string().max(100),
 	done: Joi.boolean(),
-	uid: Joi.any()
+	id: Joi.any()
 });
 
 tasksRouter.use((req, res, next) => {
@@ -70,8 +70,8 @@ tasksRouter.route('/task')
 
 		switch(req.query.type) {
 			case 'd':
-				startDate = subDays(req.query.date, 2);
-				endDate = addDays(req.query.date, 2);
+				startDate = req.query.date;
+				endDate = addDays(req.query.date, 3);
 				break;
 			case 'w':
 				startDate = startOfWeek(req.query.date, {weekStartsOn: 1});
