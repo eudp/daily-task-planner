@@ -24,6 +24,10 @@ const bodySchema = Joi.object().keys({
 	id: Joi.any()
 });
 
+const deleteSchema = Joi.object().keys({
+	id: Joi.any().required()
+});
+
 tasksRouter.use((req, res, next) => {
 	if (req.isAuthenticated()){
 		return next();
@@ -44,6 +48,9 @@ tasksRouter.use((req, res, next) => {
 	if (req.method === 'GET') {
 		reqContent = req.query;
 		schema = queryStringSchema;
+	} else if (req.method === 'DELETE') {
+		reqContent = req.query;
+		schema = deleteSchema;
 	} else {
 		reqContent = req.body;
 		schema = bodySchema;
@@ -205,7 +212,7 @@ tasksRouter.route('/task')
 				{
 					"$pull": {
 						tasks: {
-							"_id": req.body.id,
+							"_id": req.query.id,
 						}
 					}
 				}
