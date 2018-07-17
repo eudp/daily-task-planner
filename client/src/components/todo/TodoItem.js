@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
+import axios from'axios';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,50 +9,128 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core/styles';
 
-import TodoEdit from './TodoEdit';
+import EditModal from './EditModal';
+import DeleteModal from './DeleteModal';
 
-const styles = theme => ({
+const styles = (theme) => ({
 	editIcon: {
 		marginRight: 0
-	}
+	},
 });
 
-const TodoItem = (props) => (
+class TodoItem extends Component {
 
-	<ListItem 
-		role={undefined} 
-		dense 
-		disableGutters
-	>
-		<Checkbox
-			checked={props.task.done}
-			tabIndex={-1}
-			onClick={() => {/*actions.completeTodo(task._id, !task.done); */}}
-		/>
+	constructor (props) {
+		super(props);
 
-		<ListItemText primary={`Terminar proyecto de nodeJS.com`/*props.task.text*/} />
+		this.state = {
+			done: this.props.task.done,
+			text: this.props.task.text,
+			editOpen: false,
+			deleteOpen: false
+		}
+	}
 
-		<ListItemIcon>
-			<IconButton 
-      	aria-label="Edit"
-      	onClick={() => { /*setEditing(true); */}}
-      	className={props.classes.editIcon}
-      	>
-      	<EditIcon />
-      </IconButton>
-		</ListItemIcon>
+	updateTask = () => {
 
-		<ListItemIcon>
-			<IconButton 
-      	aria-label="Delete"
-      	onClick={() => { /*actions.deleteTodo(todo._id); */}}
-      	>
-      	<DeleteIcon />
-      </IconButton>
-		</ListItemIcon>
+		axios.put('/api/task', {
+			id: this.props.task._id,
+			text: this.state.text,
+			done: this.state.done,
+			date: this.props.date
+		})
+			.catch(err => {
+				console.log(err);
+			});
+	}
 
-  </ListItem>
+	handleCheckbox = (event) => {
 
-);
+		this.setState({
+			done: event.target.checked
+		}, this.updateTask);
+
+	}
+
+	handleEditUpdate = (text) => {
+		this.setState({
+			text: text
+		}, this.updateTask);
+	}
+
+	handleEditToggle = () => {
+		this.setState({editOpen: !this.state.editOpen});
+	}
+
+	handleDeleteComplete = () => {
+		this.props.handleDelete(this.props.task._id);
+	}
+
+	handleDeleteToggle = () => {
+		this.setState({deleteOpen: !this.state.deleteOpen});
+	}
+
+	render() {
+
+		const { classes } = this.props;
+		const { done, text, editOpen, deleteOpen } = this.state;
+
+		return (
+			<Fragment>
+				<ListItem 
+					role={undefined} 
+					dense 
+					disableGutters
+				>
+					<Checkbox
+						checked={done}
+						tabIndex={-1}
+						onChange={this.handleCheckbox}
+						name="done"
+					/>
+
+					<ListItemText primary={text} />
+
+					<ListItemIcon>
+						<IconButton 
+			      	aria-label="Edit"
+			      	onClick={this.handleEditToggle}
+			      	className={classes.editIcon}
+			      	>
+			      	<EditIcon />
+			      </IconButton>
+					</ListItemIcon>
+
+					<ListItemIcon>
+						<IconButton 
+			      	aria-label="Delete"
+			      	onClick={this.handleDeleteToggle}
+			      	>
+			      	<DeleteIcon />
+			      </IconButton>
+					</ListItemIcon>
+
+			  </ListItem>
+
+			  <EditModal
+			  	open={editOpen}
+			  	handleEditUpdate={this.handleEditUpdate}
+	        handleEditClose={this.handleEditToggle}
+	        text={text}
+	      />
+
+	      <DeleteModal
+			  	open={deleteOpen}
+			  	handleDeleteComplete={this.handleDeleteComplete}
+	        handleDeleteClose={this.handleDeleteToggle}
+	      />
+
+      </Fragment>
+      
+		);
+
+	}
+
+}
 
 export default withStyles(styles)(TodoItem);

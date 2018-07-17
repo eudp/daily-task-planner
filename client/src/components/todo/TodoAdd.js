@@ -1,23 +1,62 @@
-import React from 'react'
+import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
-const TodoAdd = (props) => (
+class TodoAdd extends Component {
 
-  <Grid container spacing={8} justify="center">
- 
-    <Grid item xs={10}>
-      <TextField
-        name="todo-add"
-        label="What needs to be done?"
-        type="text"
-        fullWidth
-        margin="normal"
-      />
-    </Grid>
+  constructor(props) {
+    super(props);
 
-  </Grid>
+    this.state = {
+      text: ''
+    }
+  }
 
-);
+  handleInputChanged = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmitAdd = (event) => {
+    event.preventDefault(); 
+
+    const { text } = this.state;
+    
+    this.props.handleAdd(text);
+
+    this.setState({
+      text: ''
+    });
+
+  }
+
+  render() {
+
+    const { text } = this.state;
+
+    return (
+
+      <form onSubmit={this.handleSubmitAdd}>
+        <Grid container spacing={8} justify="center">
+       
+          <Grid item xs={10}>
+            <TextField
+              name="text"
+              label="What needs to be done?"
+              type="text"
+              fullWidth
+              margin="normal"
+              onChange={this.handleInputChanged}
+              value={text}
+            />
+          </Grid>
+
+        </Grid>
+      </form>
+
+    );
+  }
+}
 
 export default TodoAdd;

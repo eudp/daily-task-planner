@@ -1,87 +1,93 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import axios from 'axios';
-import format from 'date-fns/format';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
-import { withUser } from '../../services/withUser';
-
-import TodoTasks from './TodoTasks';
+import TodoItem from './TodoItem';
 import TodoAdd from './TodoAdd';
 
-class TodoList extends Component { 
+
+class TodoList extends Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			todo: []
-		};
+			tasks: this.props.tasks
+		}
 	}
 
-	componentDidMount() {
+	handleAdd = (text) => {
 
-		if (!this.props.user) {
-			return;
-		}
-
-		axios.get('/api/task?date=2018-07-01&type=m')
+		axios.post('/api/task', {
+			text: text,
+			date: this.props.date
+		})
 			.then(res => {
+
+				delete res.data.date;
+
 				this.setState({
-					todo: res.data
+					tasks: [...this.state.tasks, res.data]
 				});
+
 			})
 			.catch(err => {
-				this.setState({
-					todo: []
-				});
+				console.log(err);
 			});
-
 	}
-	render () {
 
-		const { todo } = this.state;
+	handleDelete = (id) => {
+		
+		axios.delete('/api/task', {
+			params: {
+				id: id
+			}
+		})
+			.then(res => {
 
-		return(
-			<Grid container spacing={24} alignItems="center">
-				{!todo &&
-					<Grid item xs={12} >
-						<Typography component="p">
-							Hold, on looking for your tasks...
-						</Typography>
-					</Grid>
-				}
-				{todo &&
-					<Fragment>
-						{todo.map((currentValue, index) => 
-							
-							<Grid item xs={12} md={3} key={currentValue.date}>
+				const newTasks = this.state.tasks.filter(obj => obj._id !== id);
 
-								<Paper>
+				this.setState({
+					tasks: newTasks
+				});
 
-									<Typography variant="headline" component="h3" align="center" gutterBottom>
-										{format(currentValue.date, 'MMMM D, YYYY')}
-									</Typography>
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
 
+	render() {
 
-									<TodoTasks tasks={currentValue.tasks}/>
+		const { tasks } = this.state;
 
-									<Divider/>
+		return (
+			<Fragment>
 
-									<TodoAdd date={currentValue.date}/>
+				{tasks.length ? (
 
-								</Paper>
+							<List>
+								{tasks.map((task) =>
+									<TodoItem handleDelete={this.handleDelete} key={task._id} task={task} date={this.props.date}/>
+								)}
+							</List>
 
-							</Grid>
+				) : (
+					<Typography component="p" align="center" gutterBottom>
+						Without tasks yet.
+					</Typography>
+				)}
 
-						)}
-					</Fragment>
-				}
-			</Grid>
+				<Divider/>
+
+				<TodoAdd handleAdd={this.handleAdd}/>
+
+			</Fragment>
 		);
 	}
+
 }
 
-export default withUser(TodoList);
+export default TodoList;
