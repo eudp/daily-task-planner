@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { withUser } from '../services/withUser';
 
-import TodoList from '../components/todo/TodoList';
+import TodoDays from '../components/todo/TodoDays';
 
 const styles = {
 	widthMainItem: {
@@ -23,7 +23,7 @@ const HomePage = (props) => {
 			{user &&
 
 				<Grid item xs={12} className={classes.widthMainItem}>
-					<TodoList/>
+					<TodoDays/>
 				</Grid>
 
 			}
