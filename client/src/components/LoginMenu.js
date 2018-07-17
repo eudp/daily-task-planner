@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -16,7 +15,7 @@ class LoginMenu extends Component {
 		}
 	}
 
-	handleClick = event => {
+	handleClick = (event) => {
 		this.setState({
 			anchorEl: event.currentTarget
 		});

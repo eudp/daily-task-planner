@@ -26,11 +26,11 @@ const styles = {
 };
 
 const Navbar = (props) => {
-	const { user, classes } = props;
+	const { user, classes, history } = props;
 	const userName = user ? user.userName : null;
 
 	const handleLogIn = () => {
-		props.history.push('/login');
+		history.push('/login');
 	};
 
 	const handleLogOut = () => {
