@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import { withUser } from '../services/withUser';
 
 const styles = {
   button: {
@@ -69,8 +72,12 @@ class CreateAccountPage extends Component {
 
 	render() {
 
-		const { classes } = this.props;
+		const { classes, user } = this.props;
 		const { error } = this.state;
+
+		if (user) {
+			return <Redirect to="/" />;
+		}
 
 		return (
 
@@ -153,4 +160,4 @@ class CreateAccountPage extends Component {
 	}
 }
 
-export default withStyles(styles)(CreateAccountPage);
+export default withStyles(styles)(withUser(CreateAccountPage));

@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { update } from '../services/withUser';
+import { update, withUser } from '../services/withUser';
 
 const styles = {
   button: {
@@ -56,8 +56,12 @@ class LoginPage extends Component {
 	}
 
 	render() {
-		const { classes } = this.props;
+		const { classes, user } = this.props;
 		const { error } = this.state;
+
+		if (user) {
+			return <Redirect to="/" />;
+		}
 
 		return (
 
@@ -121,4 +125,4 @@ class LoginPage extends Component {
 	}
 }
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(styles)(withUser(LoginPage));
