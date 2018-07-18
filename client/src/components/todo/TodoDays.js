@@ -21,25 +21,27 @@ class TodoDays extends Component {
 
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 
 		if (!this.props.user) {
 			return;
 		}
 
-		axios.get('/api/task?date=2018-07-01&type=m')
-			.then(res => {
-				this.setState({
-					todo: res.data
-				});
-				console.log(res.data);
-			})
-			.catch(err => {
-				this.setState({
-					todo: []
-				});
+		try {
+
+			const res = await axios.get('/api/task?date=2018-07-01&type=m');
+
+			this.setState({
+				todo: res.data
 			});
 
+		} catch (err) {
+			console.log(err);
+			this.setState({
+				todo: []
+			});
+		}
+		
 	}
 
 	cleaningTimezone = (date) => {

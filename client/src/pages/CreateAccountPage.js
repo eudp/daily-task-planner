@@ -32,7 +32,7 @@ class CreateAccountPage extends Component {
 		});
 	}
 
-	handleRegister = (event) => {
+	handleRegister = async (event) => {
 		event.preventDefault();
 
 		const { userName, email, password, confirmationPassword } = this.state;
@@ -49,20 +49,22 @@ class CreateAccountPage extends Component {
 			return;
 		}
 
-		axios.post('api/users', {
-			userName,
-			email,
-			password,
-			confirmationPassword
-		})
-			.then(user => {
-				history.push('/login');
-			})
-			.catch(err => {
-				this.setState({
-					error: err.response.data.message || err.message
-				});
+		try {
+
+			const user = await axios.post('api/users', {
+										userName,
+										email,
+										password,
+										confirmationPassword
+									});
+
+			history.push('/login');
+
+		} catch (err) {
+			this.setState({
+				error: err.response.data.message || err.message
 			});
+		}
 	}
 
 	render() {

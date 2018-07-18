@@ -32,25 +32,27 @@ class LoginPage extends Component {
 		});
 	}
 
-	handleLogin = (event) => {
+	handleLogin = async (event) => {
 		event.preventDefault();
 
 		const { email, password } = this.state;
 		const { history } = this.props;
 
-		axios.post('/api/auth', {
-			email, 
-			password
-		})
-			.then(user => {
-				update(user.data);
-				history.push('/');
-			})
-			.catch(err => {
-				this.setState({
-					error: err.response.status === 401 ? 'Invalid email or password.' : err.message
-				});
+		try {
+
+			const user = await axios.post('/api/auth', {
+										email, 
+										password
+									});
+
+			update(user.data);
+			history.push('/');
+
+		} catch (err) {
+			this.setState({
+				error: err.response.status === 401 ? 'Invalid email or password.' : err.message
 			});
+		}
 	}
 
 	render() {

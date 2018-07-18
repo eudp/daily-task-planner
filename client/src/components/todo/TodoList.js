@@ -18,45 +18,47 @@ class TodoList extends Component {
 		}
 	}
 
-	handleAdd = (text) => {
+	handleAdd = async (text) => {
 
-		axios.post('/api/task', {
-			text: text,
-			date: this.props.date
-		})
-			.then(res => {
+		try {
 
-				delete res.data.date;
+			const res = await axios.post('/api/task', {
+										text: text,
+										date: this.props.date
+									});
 
-				this.setState({
-					tasks: [...this.state.tasks, res.data]
-				});
+			delete res.data.date;
 
-			})
-			.catch(err => {
-				console.log(err);
+			this.setState({
+				tasks: [...this.state.tasks, res.data]
 			});
+
+		} catch (err) {
+			console.log(err);
+		}
+
 	}
 
-	handleDelete = (id) => {
-		
-		axios.delete('/api/task', {
-			params: {
-				id: id
-			}
-		})
-			.then(res => {
+	handleDelete = async (id) => {
 
-				const newTasks = this.state.tasks.filter(obj => obj._id !== id);
+		try {
 
-				this.setState({
-					tasks: newTasks
-				});
+			const res = await axios.delete('/api/task', {
+										params: {
+											id: id
+										}
+									});
 
-			})
-			.catch(err => {
-				console.log(err);
+			const newTasks = this.state.tasks.filter(obj => obj._id !== id);
+
+			this.setState({
+				tasks: newTasks
 			});
+
+		} catch (err) {
+			console.log(err);
+		}
+		
 	}
 
 	render() {

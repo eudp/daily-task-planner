@@ -31,25 +31,27 @@ class TodoItem extends Component {
 		}
 	}
 
-	updateTask = () => {
+	updateTask = async () => {
 
-		axios.put('/api/task', {
-			id: this.props.task._id,
-			text: this.state.text,
-			done: this.state.done,
-			date: this.props.date
-		})
-			.catch(err => {
-				console.log(err);
+		try {
+
+			await axios.put('/api/task', {
+				id: this.props.task._id,
+				text: this.state.text,
+				done: this.state.done,
+				date: this.props.date
 			});
+
+		} catch (err) {
+			console.log(err);
+		}
+
 	}
 
 	handleCheckbox = (event) => {
-
 		this.setState({
 			done: event.target.checked
 		}, this.updateTask);
-
 	}
 
 	handleEditUpdate = (text) => {
