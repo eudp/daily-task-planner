@@ -12,16 +12,26 @@ import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 class App extends Component {
-	componentDidMount() {
-		axios.get('/api/auth')
-			.then(res => {
-				update(res.data);
-			})
-			.catch(err => {
-				if (err.response.status === 401) {
-					update(null);
-				}
-			});
+	
+	async componentDidMount() {
+
+		try {
+
+			// this is going to double check that the user is still actually logged in
+
+			const res = await axios.get('/api/auth');
+
+			// if we get here, the user's session is still good. we'll update the user
+      // to make sure we're using the most recent values just in case
+
+			update(res.data);
+
+		} catch (err) {
+			if (err.response.status === 401) {
+				update(null);
+			}
+		}
+
 	}
 
 	render() {
