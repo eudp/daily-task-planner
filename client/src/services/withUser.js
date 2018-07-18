@@ -31,7 +31,7 @@ export const withUser = Component => {
 		}
 
 		render() {
-			const newProps = { ...this.props, user:state};
+			const newProps = { ...this.props, user:state };
 			return <Component {...newProps} />;
 		}
 

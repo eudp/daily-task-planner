@@ -43,11 +43,11 @@ class TodoList extends Component {
 
 		try {
 
-			const res = await axios.delete('/api/task', {
-										params: {
-											id: id
-										}
-									});
+			await axios.delete('/api/task', {
+				params: {
+					id: id
+				}
+			});
 
 			const newTasks = this.state.tasks.filter(obj => obj._id !== id);
 

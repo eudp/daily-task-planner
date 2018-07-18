@@ -54,12 +54,12 @@ class CreateAccountPage extends Component {
 
 		try {
 
-			const user = await axios.post('api/users', {
-										userName,
-										email,
-										password,
-										confirmationPassword
-									});
+			await axios.post('api/users', {
+				userName,
+				email,
+				password,
+				confirmationPassword
+			});
 
 			history.push('/login');
 

@@ -27,7 +27,6 @@ const styles = {
 
 const Navbar = (props) => {
 	const { user, classes, history } = props;
-	const userName = user ? user.userName : null;
 
 	const handleLogIn = () => {
 		history.push('/login');
