@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -29,39 +29,38 @@ const styles = (theme) => ({
   },
 });
 
-class DeleteModal extends Component {
+const DeleteModal = (props) => {
 
-	handleDeleteAccepted = () => {
-		this.props.handleDeleteComplete();
-		this.props.handleDeleteClose();
+	const handleDeleteAccepted = () => {
+		props.handleDeleteComplete();
+		props.handleDeleteClose();
 	}
 
-	render () {
-		const { classes, open, handleDeleteClose } = this.props;
+	const { classes, open, handleDeleteClose } = props;
 
-		return (
-		  <Modal
-	      aria-labelledby="Delete task"
-	      open={open}
-	      onClose={handleDeleteClose}
-	    >
-	    	<div style={getModalStyle()} className={classes.paper}>
-	    		<Grid container spacing={8} justify="center">
-		    		<Grid item xs={10}>
-			        <Typography variant="title" id="modal-title">
-			          Are you sure you want to delete this task?
-			        </Typography>
-				    </Grid>
-	  			</Grid>
-	  			<Grid item xs={2} className={classes.button}>
-						<Button onClick={this.handleDeleteAccepted} size="small" variant="raised" color="primary" type="submit">
-							Delete
-						</Button>
-					</Grid>
-	      </div>
-	    </Modal>
-		);
-	}
+	return (
+	  <Modal
+      aria-labelledby="Delete task"
+      open={open}
+      onClose={handleDeleteClose}
+    >
+    	<div style={getModalStyle()} className={classes.paper}>
+    		<Grid container spacing={8} justify="center">
+	    		<Grid item xs={10}>
+		        <Typography variant="title" id="modal-title">
+		          Are you sure you want to delete this task?
+		        </Typography>
+			    </Grid>
+  			</Grid>
+  			<Grid item xs={2} className={classes.button}>
+					<Button onClick={this.handleDeleteAccepted} size="small" variant="raised" color="primary" type="submit">
+						Delete
+					</Button>
+				</Grid>
+      </div>
+    </Modal>
+	);
+
 }
 
 export default withStyles(styles)(DeleteModal);
