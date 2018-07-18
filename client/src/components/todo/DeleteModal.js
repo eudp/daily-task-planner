@@ -53,7 +53,7 @@ const DeleteModal = (props) => {
 			    </Grid>
   			</Grid>
   			<Grid item xs={2} className={classes.button}>
-					<Button onClick={this.handleDeleteAccepted} size="small" variant="raised" color="primary" type="submit">
+					<Button onClick={handleDeleteAccepted} size="small" variant="raised" color="primary" type="submit">
 						Delete
 					</Button>
 				</Grid>
