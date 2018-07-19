@@ -17,14 +17,10 @@ const styles = {
 
 class LoginPage extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			email: null,
-			password: null
-		};
-	}
+	state = {
+		email: null,
+		password: null
+	};
 
 	handleInputChanged = (event) => {
 		this.setState({

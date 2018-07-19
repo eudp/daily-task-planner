@@ -32,12 +32,8 @@ const styles = (theme) => ({
 
 class EditModal extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = ({
-			text: this.props.text
-		})
+	state = {
+		text: this.props.text
 	}
 
 	handleInputChanged = (event) => {

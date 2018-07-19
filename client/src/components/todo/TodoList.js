@@ -10,12 +10,8 @@ import TodoAdd from './TodoAdd';
 
 class TodoList extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			tasks: this.props.tasks
-		}
+	state = {
+		tasks: this.props.tasks
 	}
 
 	handleAdd = async (text) => {

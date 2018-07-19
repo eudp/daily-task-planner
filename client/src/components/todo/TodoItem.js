@@ -20,15 +20,11 @@ const styles = (theme) => ({
 
 class TodoItem extends Component {
 
-	constructor (props) {
-		super(props);
-
-		this.state = {
-			done: this.props.task.done,
-			text: this.props.task.text,
-			editOpen: false,
-			deleteOpen: false
-		}
+	state = {
+		done: this.props.task.done,
+		text: this.props.task.text,
+		editOpen: false,
+		deleteOpen: false
 	}
 
 	updateTask = async () => {

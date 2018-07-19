@@ -10,14 +10,9 @@ import TodoList from './TodoList';
 
 class TodoDays extends Component { 
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			todo: []
-		};
-
-	}
+	state = {
+		todo: []
+	};
 
 	async componentDidMount() {
 

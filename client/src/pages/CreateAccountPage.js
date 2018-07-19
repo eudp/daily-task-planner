@@ -17,17 +17,13 @@ const styles = {
 
 class CreateAccountPage extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			userName: null,
-			email: null,
-			password: null,
-			confirmationPassword: null,
-			error: null
-		};
-	}
+	state = {
+		userName: null,
+		email: null,
+		password: null,
+		confirmationPassword: null,
+		error: null
+	};
 
 	handleInputChanged = (event) => {
 		this.setState({
