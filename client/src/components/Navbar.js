@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,6 +10,8 @@ import { update } from '../services/withUser';
 
 import LoginButton from './LoginButton';
 import LoginMenu from './LoginMenu';
+import DatePicker from './login-options/DatePicker';
+import MenuOptions from './login-options/TypeSearch';
 
 const styles = {
 	root: {
@@ -55,9 +57,12 @@ const Navbar = (props) => {
 								Daily Task Planner {user ? `| ${user.userName}` : ``}
 							</Link>
 						</Typography>
-					
 					{user ?
-						<LoginMenu onLogOut={handleLogOut} />
+						<Fragment>
+							<DatePicker />
+							<MenuOptions />
+							<LoginMenu onLogOut={handleLogOut} />
+						</Fragment>
 						: <LoginButton onClick={handleLogIn} />}
 				</Toolbar>
 			</AppBar>
