@@ -32,15 +32,17 @@ const Navbar = (props) => {
 		history.push('/login');
 	};
 
-	const handleLogOut = () => {
-		axios.delete('/api/auth')
-			.then(() => {
-				update(null);
-			})
-			.catch((err) => {
-				console.log(err);
-			}
-		);
+	const handleLogOut = async () => {
+
+		try {
+
+			await axios.delete('/api/auth');
+			update(null);
+
+		} catch (err) {
+			console.log(err);
+		}
+
 	};
 
 	return (
