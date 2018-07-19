@@ -28,11 +28,13 @@ const HomePage = (props) => {
 
 			}
 			{!user &&
+
 				<Grid item xs={12}>
 					<Typography variant="headline" align="center">
 						Hey! I don't recognize you! Log in using the link above
 					</Typography>
 				</Grid>
+				
 			}
 		</Grid>
 
