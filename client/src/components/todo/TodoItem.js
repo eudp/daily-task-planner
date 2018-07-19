@@ -25,7 +25,7 @@ class TodoItem extends Component {
 		text: this.props.task.text,
 		editOpen: false,
 		deleteOpen: false
-	}
+	};
 
 	updateTask = async () => {
 

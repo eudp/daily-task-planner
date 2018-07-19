@@ -12,7 +12,7 @@ class TodoList extends Component {
 
 	state = {
 		tasks: this.props.tasks
-	}
+	};
 
 	handleAdd = async (text) => {
 

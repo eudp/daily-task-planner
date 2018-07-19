@@ -6,7 +6,7 @@ class TodoAdd extends Component {
 
   state = {
     text: ''
-  }
+  };
 
   handleInputChanged = (event) => {
     this.setState({

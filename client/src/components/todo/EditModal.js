@@ -34,7 +34,7 @@ class EditModal extends Component {
 
 	state = {
 		text: this.props.text
-	}
+	};
 
 	handleInputChanged = (event) => {
 		this.setState({
