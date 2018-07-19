@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import { withUser } from '../../services/withUser';
-
 import TodoList from './TodoList';
 
 class TodoDays extends Component { 
@@ -22,10 +20,6 @@ class TodoDays extends Component {
 	}
 
 	async componentDidMount() {
-
-		if (!this.props.user) {
-			return;
-		}
 
 		try {
 
@@ -92,4 +86,4 @@ class TodoDays extends Component {
 	}
 }
 
-export default withUser(TodoDays);
+export default TodoDays;
