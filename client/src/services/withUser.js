@@ -10,7 +10,7 @@ let state = stateFromStore ? JSON.parse(stateFromStore) : null;
 const subscribers = [];
 
 const unsubscribe = subscriber => {
-	const index = subscribers.findIndex(subscriber);
+	const index = subscribers.indexOf(subscriber);
 	index >= 0 && subscribers.splice(index, 1);
 };
 
