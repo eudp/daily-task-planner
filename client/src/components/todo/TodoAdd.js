@@ -8,13 +8,13 @@ class TodoAdd extends Component {
     text: ''
   };
 
-  handleInputChanged = (event) => {
+  handleInputChanged = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  handleSubmitAdd = (event) => {
+  handleSubmitAdd = event => {
     event.preventDefault(); 
 
     const { text } = this.state;

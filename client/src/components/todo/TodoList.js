@@ -14,7 +14,7 @@ class TodoList extends Component {
 		tasks: this.props.tasks
 	};
 
-	handleAdd = async (text) => {
+	handleAdd = async text => {
 
 		try {
 
@@ -35,7 +35,7 @@ class TodoList extends Component {
 
 	}
 
-	handleDelete = async (id) => {
+	handleDelete = async id => {
 
 		try {
 

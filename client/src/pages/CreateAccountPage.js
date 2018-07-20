@@ -25,13 +25,13 @@ class CreateAccountPage extends Component {
 		error: null
 	};
 
-	handleInputChanged = (event) => {
+	handleInputChanged = event => {
 		this.setState({
 			[event.target.name]: event.target.value
 		});
 	}
 
-	handleRegister = async (event) => {
+	handleRegister = async event => {
 		event.preventDefault();
 
 		const { userName, email, password, confirmationPassword } = this.state;

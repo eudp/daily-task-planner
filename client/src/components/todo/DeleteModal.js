@@ -16,7 +16,7 @@ const getModalStyle = () => {
   };
 }
 
-const styles = (theme) => ({
+const styles = theme => ({
 	paper: {
     position: 'absolute',
     width: theme.spacing.unit * 50,
@@ -29,7 +29,7 @@ const styles = (theme) => ({
   },
 });
 
-const DeleteModal = (props) => {
+const DeleteModal = props => {
 
 	const handleDeleteAccepted = () => {
 		props.handleDeleteComplete();

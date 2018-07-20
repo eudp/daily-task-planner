@@ -17,7 +17,7 @@ const getModalStyle = () => {
   };
 }
 
-const styles = (theme) => ({
+const styles = theme => ({
 	paper: {
     position: 'absolute',
     width: theme.spacing.unit * 50,
@@ -36,13 +36,13 @@ class EditModal extends Component {
 		text: this.props.text
 	};
 
-	handleInputChanged = (event) => {
+	handleInputChanged = event => {
 		this.setState({
 			[event.target.name]: event.target.value
 		});
 	}
 
-	handleInputUpdate = (event) => {
+	handleInputUpdate = event => {
 		event.preventDefault();
 		this.props.handleEditUpdate(this.state.text);
 		this.props.handleEditClose();

@@ -33,7 +33,7 @@ class TodoDays extends Component {
 		
 	}
 
-	cleaningTimezone = (date) => {
+	cleaningTimezone = date => {
 
 		const currentDate = new Date(date);
 		const timezone = currentDate.getTimezoneOffset() / 60;

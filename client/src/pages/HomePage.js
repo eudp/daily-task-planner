@@ -13,7 +13,7 @@ const styles = {
 	}
 };
 
-const HomePage = (props) => {
+const HomePage = props => {
 
 	const { user, classes } = props;
 	

@@ -22,13 +22,13 @@ class LoginPage extends Component {
 		password: null
 	};
 
-	handleInputChanged = (event) => {
+	handleInputChanged = event => {
 		this.setState({
 			[event.target.name]: event.target.value
 		});
 	}
 
-	handleLogin = async (event) => {
+	handleLogin = async event => {
 		event.preventDefault();
 
 		const { email, password } = this.state;

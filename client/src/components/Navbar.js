@@ -27,7 +27,7 @@ const styles = {
 	}
 };
 
-const Navbar = (props) => {
+const Navbar = props => {
 	const { user, classes, history } = props;
 
 	const handleLogIn = () => {

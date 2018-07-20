@@ -12,7 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
 
-const styles = (theme) => ({
+const styles = theme => ({
 	editIcon: {
 		marginRight: 0
 	},
@@ -44,13 +44,13 @@ class TodoItem extends Component {
 
 	}
 
-	handleCheckbox = (event) => {
+	handleCheckbox = event => {
 		this.setState({
 			done: event.target.checked
 		}, this.updateTask);
 	}
 
-	handleEditUpdate = (text) => {
+	handleEditUpdate = text => {
 		this.setState({
 			text: text
 		}, this.updateTask);
