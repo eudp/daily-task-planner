@@ -77,7 +77,7 @@ tasksRouter.route('/task')
 
 		switch(req.query.type) {
 			case 'd':
-				startDate = req.query.date;
+				startDate = new Date(req.query.date);
 				endDate = addDays(req.query.date, 3);
 				break;
 			case 'w':
