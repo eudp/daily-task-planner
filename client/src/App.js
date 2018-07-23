@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { Provider } from 'react-redux';
 import Navbar from './components/Navbar';
 
 import { withUser, update } from './services/withUser';
@@ -35,21 +35,25 @@ class App extends Component {
 	}
 
 	render() {
-		const { user } = this.props;
+		
+		const { user, store } = this.props;
+
 		return (
-			<Router>
-					<Fragment>
-						<Navbar
-							user={user}
-						/>
-						<Switch>
-							<Route exact path="/" component={HomePage} />
-							<Route exact path="/login" component={LoginPage} />
-							<Route exact path="/create" component={CreateAccountPage} />
-							<Route component={NotFoundPage} />
-						</Switch>
-					</Fragment>
-			</Router>
+			<Provider store={store}>
+				<Router>
+						<Fragment>
+							<Navbar
+								user={user}
+							/>
+							<Switch>
+								<Route exact path="/" component={HomePage} />
+								<Route exact path="/login" component={LoginPage} />
+								<Route exact path="/create" component={CreateAccountPage} />
+								<Route component={NotFoundPage} />
+							</Switch>
+						</Fragment>
+				</Router>
+			</Provider>
 		);
 	}
 }
