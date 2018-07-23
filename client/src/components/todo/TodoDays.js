@@ -1,24 +1,58 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import format from 'date-fns/format';
-import addHours from 'date-fns/add_hours';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import {addHours,
+				addDays, 
+				endOfWeek, 
+				startOfWeek, 
+				endOfMonth, 
+				startOfMonth,
+				isSameDay } from 'date-fns';
 
 import TodoList from './TodoList';
 
 class TodoDays extends Component { 
 
 	state = {
-		todo: []
+		todo: null
 	};
 
-	async componentDidMount() {
+	componentWillReceiveProps({ date, searchType }) {
+    this.getTasks(date, searchType);
+  }
 
+	componentDidMount() {
+		this.getTasks(this.props.date, this.props.searchType);
+	}
+
+	getTasks = async (searchDate, searchType) => {
+
+		const date = format(searchDate, 'YYYY-MM-DD');
+		const type = searchType[0];
+		
 		try {
 
-			const res = await axios.get('/api/task?date=2018-07-01&type=m');
+			const res = await axios.get(`/api/task?date=${date}&type=${type}`);
+
+			const { startDate, endDate } = this.getLimitDate();
+			let i = 0;
+
+			for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
+
+				/**
+				* if the user hasn't tasks that day (doesn't match the days), it creates the empty day 
+				* on the state
+				*/
+				if (res.data[i] === undefined || !isSameDay(date, this.cleaningTimezone(res.data[i]._id))){	
+					res.data.splice(i, 0, {_id: date.toISOString(), tasks: []});
+				} 
+				i++;
+
+			}
 
 			this.setState({
 				todo: res.data
@@ -30,9 +64,34 @@ class TodoDays extends Component {
 				todo: []
 			});
 		}
-		
+
 	}
 
+	getLimitDate = () => {
+
+		const { date, searchType } = this.props;
+		let startDate, endDate;
+		
+		switch(searchType) {
+			case 'week':
+				startDate = startOfWeek(date, {weekStartsOn: 1});
+				endDate = endOfWeek(date, {weekStartsOn: 1});
+				break;
+			case 'month':
+				startDate = startOfMonth(date);
+				endDate = endOfMonth(date);
+				break;
+			default:
+				startDate = date;
+				endDate = addDays(date, 3);
+		}
+
+		return { startDate, endDate };
+	}
+
+	/*
+	* cleaningTimezone returns a date converted into timezone of the browser
+	*/
 	cleaningTimezone = date => {
 
 		const currentDate = new Date(date);
@@ -66,7 +125,6 @@ class TodoDays extends Component {
 										{format(this.cleaningTimezone(dayList._id), 'MMMM D, YYYY')}
 									</Typography>
 
-
 									<TodoList handleDone={this.handleDone} tasks={dayList.tasks} date={format(this.cleaningTimezone(dayList._id), 'YYYY-MM-DD')}/>
 
 								</Paper>
@@ -81,4 +139,11 @@ class TodoDays extends Component {
 	}
 }
 
-export default TodoDays;
+function mapStateToProps(state) {
+  return {
+  	date: state.date,
+    searchType: state.searchType
+  }
+}
+
+export default connect(mapStateToProps)(TodoDays);
