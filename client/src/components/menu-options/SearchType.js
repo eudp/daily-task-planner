@@ -1,9 +1,11 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 
 const styles = theme => ({
   root: {
@@ -17,18 +19,15 @@ const styles = theme => ({
   }
 });
 
-class RadioButtonsGroup extends React.Component {
-	
-  state = {
-    value: "default"
-  };
+class SearchType extends Component {
 
   handleChange = event => {
-    this.setState({ value: event.target.value });
+    this.props.dispatch({ type: 'CHANGE_TYPE', searchType:  event.target.value});
   };
 
   render() {
-    const { classes } = this.props;
+
+    const { classes, searchType } = this.props;
 
     return (
       <div className={classes.root}>
@@ -38,9 +37,9 @@ class RadioButtonsGroup extends React.Component {
         >
           <RadioGroup
             aria-label="Type of search"
-            name="type-search"
+            name="search-type"
             className={classes.group}
-            value={this.state.value}
+            value={searchType}
             onChange={this.handleChange}
             row
           >
@@ -54,4 +53,10 @@ class RadioButtonsGroup extends React.Component {
   }
 }
 
-export default withStyles(styles)(RadioButtonsGroup);
+function mapStateToProps(state) {
+  return {
+    searchType: state.searchType
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SearchType));
