@@ -9,9 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import { update } from '../services/withUser';
 
 import LoginButton from './LoginButton';
-import LoginMenu from './LoginMenu';
-import DatePicker from './login-options/DatePicker';
-import MenuOptions from './login-options/TypeSearch';
+import LoginMenu from './menu-options/LoginMenu';
+import DatePicker from './menu-options/DatePicker';
+import MenuOptions from './menu-options/SearchType';
 
 const styles = {
 	root: {
