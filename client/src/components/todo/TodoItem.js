@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import axios from'axios';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -27,33 +26,16 @@ class TodoItem extends Component {
 		deleteOpen: false
 	};
 
-	updateTask = async () => {
-
-		try {
-
-			await axios.put('/api/task', {
-				id: this.props.task._id,
-				text: this.state.text,
-				done: this.state.done,
-				date: this.props.date
-			});
-
-		} catch (err) {
-			console.log(err);
-		}
-
-	}
-
 	handleCheckbox = event => {
 		this.setState({
 			done: event.target.checked
-		}, this.updateTask);
+		}, () => this.props.handleUpdate(this.props.task._id, this.state.text, this.state.done));
 	}
 
-	handleEditUpdate = text => {
+	handleEditComplete = text => {
 		this.setState({
 			text: text
-		}, this.updateTask);
+		}, () => this.props.handleUpdate(this.props.task._id, this.state.text, this.state.done));
 	}
 
 	handleEditToggle = () => {
@@ -112,7 +94,7 @@ class TodoItem extends Component {
 
 			  <EditModal
 			  	open={editOpen}
-			  	handleEditUpdate={this.handleEditUpdate}
+			  	handleEditComplete={this.handleEditComplete}
 	        handleEditClose={this.handleEditToggle}
 	        text={text}
 	      />

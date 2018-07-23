@@ -57,6 +57,23 @@ class TodoList extends Component {
 		
 	}
 
+	handleUpdate = async (id, text, done) => {
+
+		try {
+
+			await axios.put('/api/task', {
+				id: id,
+				text: text,
+				done: done,
+				date: this.props.date
+			});
+
+		} catch (err) {
+			console.log(err);
+		}
+
+	}
+
 	render() {
 
 		const { tasks } = this.state;
@@ -66,11 +83,11 @@ class TodoList extends Component {
 
 				{tasks.length ? (
 
-							<List>
-								{tasks.map((task) =>
-									<TodoItem handleDelete={this.handleDelete} key={task._id} task={task} date={this.props.date}/>
-								)}
-							</List>
+					<List>
+						{tasks.map((task) =>
+							<TodoItem handleDelete={this.handleDelete} handleUpdate={this.handleUpdate} key={task._id} task={task}/>
+						)}
+					</List>
 
 				) : (
 					<Typography component="p" align="center" gutterBottom>

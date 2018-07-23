@@ -44,7 +44,7 @@ class EditModal extends Component {
 
 	handleInputUpdate = event => {
 		event.preventDefault();
-		this.props.handleEditUpdate(this.state.text);
+		this.props.handleEditComplete(this.state.text);
 		this.props.handleEditClose();
 	}
 
