@@ -1,14 +1,9 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 
-import TodoItem from './TodoItem';
-import TodoAdd from './TodoAdd';
+import TodoList from '../components/TodoList';
 
-
-class TodoList extends Component {
+class TodoListContainer extends Component {
 
 	state = {
 		tasks: this.props.tasks
@@ -79,30 +74,15 @@ class TodoList extends Component {
 		const { tasks } = this.state;
 
 		return (
-			<Fragment>
-
-				{tasks.length ? (
-
-					<List>
-						{tasks.map((task) =>
-							<TodoItem handleDelete={this.handleDelete} handleUpdate={this.handleUpdate} key={task._id} task={task}/>
-						)}
-					</List>
-
-				) : (
-					<Typography component="p" align="center" gutterBottom>
-						Without tasks yet.
-					</Typography>
-				)}
-
-				<Divider/>
-
-				<TodoAdd handleAdd={this.handleAdd}/>
-
-			</Fragment>
+			<TodoList
+				tasks={tasks} 
+				handleDelete={this.handleDelete} 
+				handleUpdate={this.handleUpdate} 
+				handleAdd={this.handleAdd} 
+			/>
 		);
 	}
 
 }
 
-export default TodoList;
+export default TodoListContainer;

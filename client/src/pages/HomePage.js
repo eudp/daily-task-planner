@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { withUser } from '../services/withUser';
 
-import DaysList from '../components/todo/DaysList';
+import DaysList from '../containers/DaysListContainer';
 
 const styles = {
 	widthMainItem: {

@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import TodoList from './TodoList';
+import TodoListContainer from '../containers/TodoListContainer';
 
 
 const TodoDay = ({ todoDay, cleaningTimezone }) => {
@@ -19,7 +19,7 @@ const TodoDay = ({ todoDay, cleaningTimezone }) => {
 					{format(cleaningTimezone(todoDay._id), 'MMMM D, YYYY')}
 				</Typography>
 
-				<TodoList tasks={todoDay.tasks} date={format(cleaningTimezone(todoDay._id), 'YYYY-MM-DD')}/>
+				<TodoListContainer tasks={todoDay.tasks} date={format(cleaningTimezone(todoDay._id), 'YYYY-MM-DD')}/>
 
 			</Paper>
 

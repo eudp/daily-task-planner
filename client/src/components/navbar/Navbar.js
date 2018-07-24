@@ -1,17 +1,14 @@
-import axios from 'axios';
 import React, { Fragment } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { update } from '../services/withUser';
-
 import LoginButton from './LoginButton';
-import LoginMenu from './menu-options/LoginMenu';
-import DatePicker from './menu-options/DatePicker';
-import MenuOptions from './menu-options/SearchType';
+import LoginMenu from './LoginMenu';
+import DatePickerContainer from '../../containers/DatePickerContainer';
+import SearchTypeContainer from '../../containers/SearchTypeContainer';
 
 const styles = {
 	root: {
@@ -27,28 +24,9 @@ const styles = {
 	}
 };
 
-const Navbar = props => {
-	const { user, classes, history } = props;
-
-	const handleLogIn = () => {
-		history.push('/login');
-	};
-
-	const handleLogOut = async () => {
-
-		try {
-
-			await axios.delete('/api/auth');
-			update(null);
-
-		} catch (err) {
-			console.log(err);
-		}
-
-	};
+const Navbar = ({ user, classes, history, handleLogIn, handleLogOut }) => {
 
 	return (
-
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
@@ -59,8 +37,8 @@ const Navbar = props => {
 						</Typography>
 					{user ?
 						<Fragment>
-							<DatePicker />
-							<MenuOptions />
+							<DatePickerContainer />
+							<SearchTypeContainer />
 							<LoginMenu onLogOut={handleLogOut} />
 						</Fragment>
 						: <LoginButton onClick={handleLogIn} />}
@@ -70,4 +48,4 @@ const Navbar = props => {
 	);
 };
 
-export default withRouter(withStyles(styles)(Navbar));
+export default withStyles(styles)(Navbar);

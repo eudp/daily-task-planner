@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Navbar from './components/Navbar';
 
 import { withUser, update } from './services/withUser';
 
+import NavbarContainer from './containers/NavbarContainer';
 import CreateAccountPage from './pages/CreateAccountPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -42,7 +42,7 @@ class App extends Component {
 			<Provider store={store}>
 				<Router>
 						<Fragment>
-							<Navbar
+							<NavbarContainer
 								user={user}
 							/>
 							<Switch>

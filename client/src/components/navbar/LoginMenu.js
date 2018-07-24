@@ -25,7 +25,7 @@ class LoginMenu extends Component {
 
 	render() {
 
-		const { classes, onLogOut, ...otherProps } = this.props;
+		const { onLogOut } = this.props;
 		const { anchorEl } = this.state;
 
 		return (
@@ -41,7 +41,6 @@ class LoginMenu extends Component {
 				</IconButton>
 
 				<Menu 
-					{...otherProps} 
 					id="long-menu"
 					anchorEl={anchorEl}
 					open={Boolean(anchorEl)}

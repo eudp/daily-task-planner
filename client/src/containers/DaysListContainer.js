@@ -1,9 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import format from 'date-fns/format';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import {addHours,
 				addDays, 
 				endOfWeek, 
@@ -12,9 +10,9 @@ import {addHours,
 				startOfMonth,
 				isSameDay } from 'date-fns';
 
-import TodoDay from './TodoDay';
+import DaysList from '../components/DaysList';
 
-class DaysList extends Component { 
+class DayListContainer extends Component { 
 
 	state = {
 		tasks: null
@@ -104,22 +102,7 @@ class DaysList extends Component {
 		const { tasks } = this.state;
 
 		return(
-			<Grid container spacing={24} alignItems="center">
-				{!tasks &&
-					<Grid item xs={12} >
-						<Typography component="p">
-							Hold, on looking for your tasks...
-						</Typography>
-					</Grid>
-				}
-				{tasks &&
-					<Fragment>
-						{tasks.map((todoDay) => 
-							<TodoDay key={todoDay._id} todoDay={todoDay} cleaningTimezone={this.cleaningTimezone} />
-						)}
-					</Fragment>
-				}
-			</Grid>
+			<DaysList tasks={tasks} cleaningTimezone={this.cleaningTimezone}/>
 		);
 	}
 }
@@ -131,4 +114,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(DaysList);
+export default connect(mapStateToProps)(DayListContainer);

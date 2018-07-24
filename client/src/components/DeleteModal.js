@@ -29,14 +29,12 @@ const styles = theme => ({
   },
 });
 
-const DeleteModal = props => {
+const DeleteModal = ({ classes, open, handleDeleteClose, handleDeleteComplete }) => {
 
 	const handleDeleteAccepted = () => {
-		props.handleDeleteComplete();
-		props.handleDeleteClose();
+		handleDeleteComplete();
+		handleDeleteClose();
 	}
-
-	const { classes, open, handleDeleteClose } = props;
 
 	return (
 	  <Modal
