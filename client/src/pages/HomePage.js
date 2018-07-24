@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { withUser } from '../services/withUser';
 
-import TodoDays from '../components/todo/TodoDays';
+import DaysList from '../components/todo/DaysList';
 
 const styles = {
 	widthMainItem: {
@@ -23,7 +23,7 @@ const HomePage = props => {
 			{user &&
 
 				<Grid item xs={12} className={classes.widthMainItem}>
-					<TodoDays/>
+					<DaysList/>
 				</Grid>
 
 			}
