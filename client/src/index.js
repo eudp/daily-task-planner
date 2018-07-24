@@ -22,7 +22,6 @@ function reducer(state = initialState, action) {
 const store = createStore(reducer);
 
 ReactDOM.render(
-
 	<App store={store}/>, 
 	document.getElementById('root')
 );
