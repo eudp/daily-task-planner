@@ -1,24 +1,19 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 import SearchType from '../components/navbar/SearchType'
 
-const SearchTypeContainer = ({ searchType, dispatch }) => {
-
-  const handleChange = event => {
-    dispatch({ type: 'CHANGE_TYPE', searchType:  event.target.value});
-  };
-
-  return (
-    <SearchType searchType={searchType} handleChange={handleChange} />
-  );
-  
-}
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     searchType: state.searchType
   }
 }
 
-export default connect(mapStateToProps)(SearchTypeContainer);
+const mapDispatchToProps = dispatch => {
+	return {
+		handleTypeChange: event => {
+			dispatch({ type: 'CHANGE_TYPE', searchType:  event.target.value});
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchType);

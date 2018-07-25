@@ -3,22 +3,18 @@ import { connect } from 'react-redux';
 
 import Picker from '../components/navbar/DatePicker';
 
-const PickerContainer = ({ date, dispatch }) => {
-
-  const handleDateChange = date => {
-    dispatch({ type: 'CHANGE_DATE', date: date});
-  };
-
-  return (
-    <Picker date={date} handleDateChange={handleDateChange}/>
-  );
-  
-}
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     date: state.date
   }
 }
 
-export default connect(mapStateToProps)(PickerContainer);
+const mapDispatchToProps = dispatch => {
+	return {
+		handleDateChange: date => {
+			dispatch({ type: 'CHANGE_DATE', date:  date});
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Picker);
