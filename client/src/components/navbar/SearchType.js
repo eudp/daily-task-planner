@@ -18,7 +18,7 @@ const styles = theme => ({
   }
 });
 
-const SearchType = ({ searchType, handleChange, classes }) => {
+const SearchType = ({ searchType, handleTypeChange, classes }) => {
 
   return (
     <div className={classes.root}>
@@ -31,7 +31,7 @@ const SearchType = ({ searchType, handleChange, classes }) => {
           name="search-type"
           className={classes.group}
           value={searchType}
-          onChange={handleChange}
+          onChange={handleTypeChange}
           row
         >
           <FormControlLabel value="default" control={<Radio />} label="Default"/>
