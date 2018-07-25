@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import format from 'date-fns/format';
 import {addHours,
 				addDays, 
@@ -9,6 +8,8 @@ import {addHours,
 				endOfMonth, 
 				startOfMonth,
 				isSameDay } from 'date-fns';
+
+import { TaskApi } from '../api/taskApi.js';
 
 import DaysList from '../components/DaysList';
 
@@ -33,7 +34,7 @@ class DayListContainer extends Component {
 		
 		try {
 
-			const res = await axios.get(`/api/task?date=${date}&type=${type}`);
+			const res = await TaskApi.getTasks({ params: { date, type } });
 
 			const { startDate, endDate } = this.getLimitDate();
 			let i = 0;

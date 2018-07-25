@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { update, withUser } from '../services/withUser';
+import { AuthApi } from '../api/userApi';
 
 const styles = {
   button: {
@@ -36,7 +36,7 @@ class LoginPage extends Component {
 
 		try {
 
-			const user = await axios.post('/api/auth', {
+			const user = await AuthApi.createSession({
 										email, 
 										password
 									});

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
+import { TaskApi } from '../api/taskApi';
 
 import TodoList from '../components/TodoList';
 
@@ -13,7 +14,7 @@ class TodoListContainer extends Component {
 
 		try {
 
-			const res = await axios.post('/api/task', {
+			const res = await TaskApi.createTask({
 										text: text,
 										date: this.props.date
 									});
@@ -34,11 +35,7 @@ class TodoListContainer extends Component {
 
 		try {
 
-			await axios.delete('/api/task', {
-				params: {
-					id: id
-				}
-			});
+			await TaskApi.removeTask({ params: { id } });
 
 			const newTasks = this.state.tasks.filter(obj => obj._id !== id);
 
@@ -56,7 +53,7 @@ class TodoListContainer extends Component {
 
 		try {
 
-			await axios.put('/api/task', {
+			await TaskApi.updateTask({
 				id: id,
 				text: text,
 				done: done,

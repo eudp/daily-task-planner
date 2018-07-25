@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 import { update } from '../services/withUser';
+import { AuthApi } from '../api/userApi';
 
 import Navbar from '../components/navbar/Navbar';
 
@@ -16,7 +16,7 @@ const NavbarContainer = ({ user, history }) => {
 
 		try {
 
-			await axios.delete('/api/auth');
+			await AuthApi.removeSession('/api/auth');
 			update(null);
 
 		} catch (err) {

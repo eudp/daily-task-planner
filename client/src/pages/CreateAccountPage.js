@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { withUser } from '../services/withUser';
+import { UserApi } from '../api/userApi';
 
 const styles = {
   button: {
@@ -50,7 +50,7 @@ class CreateAccountPage extends Component {
 
 		try {
 
-			await axios.post('api/users', {
+			await UserApi.createUser({
 				userName,
 				email,
 				password,

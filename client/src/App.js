@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { withUser, update } from './services/withUser';
+import { AuthApi } from './api/userApi';
 
 import NavbarContainer from './containers/NavbarContainer';
 import CreateAccountPage from './pages/CreateAccountPage';
@@ -18,7 +18,7 @@ class App extends Component {
 		try {
 
 			// this is going to double check that the user is still actually logged in
-			const res = await axios.get('/api/auth');
+			const res = await AuthApi.getSession('/api/auth');
 
       /**
 			* if we get here, the user's session is still good. we'll update the user 
