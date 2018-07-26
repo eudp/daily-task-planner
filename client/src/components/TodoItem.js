@@ -27,15 +27,23 @@ class TodoItem extends Component {
 	};
 
 	handleCheckbox = event => {
+
+		this.props.handleUpdate(this.props.task._id, this.state.text, event.target.checked);
+
 		this.setState({
 			done: event.target.checked
-		}, () => this.props.handleUpdate(this.props.task._id, this.state.text, this.state.done));
+		});
+
 	}
 
 	handleEditComplete = text => {
+
+		this.props.handleUpdate(this.props.task._id, text, this.state.done);
+		
 		this.setState({
-			text: text
-		}, () => this.props.handleUpdate(this.props.task._id, this.state.text, this.state.done));
+			text
+		});
+
 	}
 
 	handleEditToggle = () => {

@@ -11,7 +11,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		handleDateChange: date => {
-			dispatch({ type: 'CHANGE_DATE', date:  date});
+			dispatch({ type: 'CHANGE_DATE', date });
 		}
 	}
 }
