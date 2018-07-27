@@ -34,7 +34,7 @@ const SearchType = ({ searchType, handleTypeChange, classes }) => {
           onChange={handleTypeChange}
           row
         >
-          <FormControlLabel value="default" control={<Radio />} label="Default"/>
+          <FormControlLabel value="default" control={<Radio />} label="Default" />
           <FormControlLabel value="week" control={<Radio />} label="Week" />
           <FormControlLabel value="month" control={<Radio />} label="Month" />
         </RadioGroup>
