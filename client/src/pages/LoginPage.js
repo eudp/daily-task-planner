@@ -68,7 +68,7 @@ class LoginPage extends Component {
 
 						<Grid container>
 							<Grid item xs={12}>
-								<Typography variant="title" color="inherit" align="center">
+								<Typography variant="title" align="center">
 									Log In to Your Account
 								</Typography>
 								{error &&
@@ -108,7 +108,7 @@ class LoginPage extends Component {
 							</Button>
 						</Grid>
 						<Grid item xs={12}>
-							<Typography paragraph color="inherit" align="center">
+							<Typography paragraph align="center">
 									or <Link to="/create">Register</Link>
 							</Typography>
 						</Grid>

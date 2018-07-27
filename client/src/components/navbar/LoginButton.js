@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 const LoginButton = ({ onClick }) => (
-	<Button color="inherit" onClick={onClick}>
+	<Button onClick={onClick}>
 		Login
 	</Button>
 );

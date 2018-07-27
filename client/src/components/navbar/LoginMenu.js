@@ -34,7 +34,6 @@ class LoginMenu extends Component {
 					aria-label="More"
 					aria-owns={Boolean(anchorEl) ? 'long-menu' : null}
 					aria-haspopup="true"
-					color="inherit"
 					onClick={this.handleClick}
 				>
 					<AccountCircle />
