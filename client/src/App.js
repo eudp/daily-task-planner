@@ -11,6 +11,27 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import { green, pink, lightBlue } from '@material-ui/core/colors';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+    secondary: pink,
+  },
+  overrides: {
+    MuiButton: { 
+      root: { 
+        color: 'white', 
+      },
+      raisedPrimary: {
+      	color: 'white'
+      }
+    },
+  },
+});
+
+
 class App extends Component {
 	
 	async componentDidMount() {
@@ -39,21 +60,23 @@ class App extends Component {
 		const { user, store } = this.props;
 
 		return (
-			<Provider store={store}>
-				<Router>
-						<Fragment>
-							<NavbarContainer
-								user={user}
-							/>
-							<Switch>
-								<Route exact path="/" component={HomePage} />
-								<Route exact path="/login" component={LoginPage} />
-								<Route exact path="/create" component={CreateAccountPage} />
-								<Route component={NotFoundPage} />
-							</Switch>
-						</Fragment>
-				</Router>
-			</Provider>
+			<MuiThemeProvider theme={theme}>
+				<Provider store={store}>
+					<Router>
+							<Fragment>
+								<NavbarContainer
+									user={user}
+								/>
+								<Switch>
+									<Route exact path="/" component={HomePage} />
+									<Route exact path="/login" component={LoginPage} />
+									<Route exact path="/create" component={CreateAccountPage} />
+									<Route component={NotFoundPage} />
+								</Switch>
+							</Fragment>
+					</Router>
+				</Provider>
+			</MuiThemeProvider>
 		);
 	}
 }
