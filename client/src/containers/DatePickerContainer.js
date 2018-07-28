@@ -4,7 +4,8 @@ import Picker from '../components/navbar/DatePicker';
 
 const mapStateToProps = state => {
   return {
-    date: state.date
+    date: state.date,
+    searchType: state.searchType
   }
 }
 
