@@ -69,9 +69,11 @@ const Picker = ({ date, searchType, handleDateChange, classes }) => {
 			case 'week': 
 				start = startOfWeek(selectedDate, {weekStartsOn: 1});
     		end = endOfWeek(selectedDate, {weekStartsOn: 1});
+        break;
 			case 'month':
 				start = startOfMonth(selectedDate);
     		end = endOfMonth(selectedDate);
+        break;
 			default:
 				start = selectedDate;
    			end = addDays(selectedDate, 3);
