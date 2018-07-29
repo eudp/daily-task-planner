@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -54,5 +55,9 @@ class TodoAdd extends Component {
     );
   }
 }
+
+TodoAdd.propTypes = {
+  handleAdd: PropTypes.func.isRequired
+};
 
 export default TodoAdd;

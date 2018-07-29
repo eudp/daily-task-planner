@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -155,5 +156,11 @@ class CreateAccountPage extends Component {
 		);
 	}
 }
+
+CreateAccountPage.propTypes = {
+	user: PropTypes.object,
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(withUser(CreateAccountPage));

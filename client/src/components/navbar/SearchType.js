@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -44,5 +45,10 @@ const SearchType = ({ searchType, handleTypeChange, classes }) => {
   
 }
 
+SearchType.propTypes = {
+  classes: PropTypes.object.isRequired,
+  searchType: PropTypes.string.isRequired,
+  handleTypeChange: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(SearchType);

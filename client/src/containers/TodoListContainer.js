@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TaskApi } from '../api/taskApi';
 
@@ -81,5 +82,10 @@ class TodoListContainer extends Component {
 	}
 
 }
+
+TodoListContainer.propTypes = {
+	date: PropTypes.string.isRequired,
+	tasks: PropTypes.array.isRequired
+};
 
 export default TodoListContainer;

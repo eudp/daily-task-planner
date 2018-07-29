@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -80,5 +81,10 @@ class App extends Component {
 		);
 	}
 }
+
+App.propTypes = {
+	user: PropTypes.object,
+  store: PropTypes.object.isRequired
+};
 
 export default withUser(App);

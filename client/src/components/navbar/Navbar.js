@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -25,7 +26,7 @@ const styles = {
 	}
 };
 
-const Navbar = ({ user, classes, history, handleLogIn, handleLogOut }) => {
+const Navbar = ({ user, classes, handleLogIn, handleLogOut }) => {
 
 	return (
 		<div className={classes.root}>
@@ -53,6 +54,13 @@ const Navbar = ({ user, classes, history, handleLogIn, handleLogOut }) => {
 			</AppBar>
 		</div>
 	);
+}
+
+Navbar.propTypes = {
+	user: PropTypes.object,
+  classes: PropTypes.object.isRequired,
+  handleLogIn: PropTypes.func.isRequired,
+  handleLogOut: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Navbar);

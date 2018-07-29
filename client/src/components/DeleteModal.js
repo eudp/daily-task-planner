@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -60,5 +61,12 @@ const DeleteModal = ({ classes, open, handleDeleteClose, handleDeleteComplete })
 	);
 
 }
+
+DeleteModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleDeleteClose: PropTypes.func.isRequired,
+  handleDeleteComplete: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(DeleteModal);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -85,5 +86,12 @@ class EditModal extends Component {
 		);
 	}
 }
+
+EditModal.propTypes = {
+	text: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  handleEditClose: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(EditModal);

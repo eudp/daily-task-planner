@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -120,5 +121,12 @@ class TodoItem extends Component {
 	}
 
 }
+
+TodoItem.propTypes = {
+	task: PropTypes.object.isRequired,
+	handleDelete: PropTypes.func.isRequired,
+	handleUpdate: PropTypes.func.isRequired,
+	classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(TodoItem);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import {addHours,
 				addDays, 
@@ -16,7 +17,7 @@ import DaysList from '../components/DaysList';
 class DayListContainer extends Component { 
 
 	state = {
-		tasks: null
+		tasks: []
 	};
 
 	componentWillReceiveProps({ date, searchType }) {
@@ -107,6 +108,11 @@ class DayListContainer extends Component {
 		);
 	}
 }
+
+DayListContainer.propTypes = {
+	date: PropTypes.instanceOf(Date).isRequired,
+	searchType: PropTypes.string.isRequired
+};
 
 function mapStateToProps(state) {
   return {

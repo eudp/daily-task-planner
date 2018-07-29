@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -28,5 +29,10 @@ const TodoDay = ({ todoDay, cleaningTimezone }) => {
 	);
 	
 }
+
+TodoDay.propTypes = {
+	cleaningTimezone: PropTypes.func.isRequired,
+	todoDay: PropTypes.object.isRequired
+};
 
 export default TodoDay;

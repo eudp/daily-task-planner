@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { withUser } from '../services/withUser';
 
-import DaysList from '../containers/DaysListContainer';
+import DaysListContainer from '../containers/DaysListContainer';
 
 const styles = {
 	widthMainItem: {
@@ -23,7 +24,7 @@ const HomePage = props => {
 			{user &&
 
 				<Grid item xs={12} className={classes.widthMainItem}>
-					<DaysList/>
+					<DaysListContainer />
 				</Grid>
 
 			}
@@ -41,5 +42,10 @@ const HomePage = props => {
 	);
 	
 }
+
+HomePage.propTypes = {
+	user: PropTypes.object,
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(withUser(HomePage));

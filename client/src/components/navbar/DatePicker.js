@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
@@ -143,5 +144,11 @@ const Picker = ({ date, searchType, handleDateChange, classes }) => {
   
 }
 
+Picker.propTypes = {
+  classes: PropTypes.object.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  searchType: PropTypes.string.isRequired,
+  handleDateChange: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(Picker);

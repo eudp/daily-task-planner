@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -64,5 +65,9 @@ class LoginMenu extends Component {
 		);
 	}
 }
+
+LoginMenu.propTypes = {
+  onLogOut: PropTypes.func.isRequired
+};
 
 export default LoginMenu;

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -34,5 +35,12 @@ const TodoList = ({ tasks, handleDelete, handleUpdate, handleAdd }) => {
 	);
 
 }
+
+TodoList.propTypes = {
+	tasks: PropTypes.array.isRequired,
+	handleDelete: PropTypes.func.isRequired,
+	handleUpdate: PropTypes.func.isRequired,
+	handleAdd: PropTypes.func.isRequired
+};
 
 export default TodoList;
