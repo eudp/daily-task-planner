@@ -56,9 +56,7 @@ class LoginPage extends Component {
 		const { classes, user } = this.props;
 		const { error } = this.state;
 
-		if (user) {
-			return <Redirect to="/" />;
-		}
+		if (user) return <Redirect to="/" />;
 
 		return (
 
