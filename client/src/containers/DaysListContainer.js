@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
@@ -10,14 +10,17 @@ import {addHours,
 				startOfMonth,
 				isSameDay } from 'date-fns';
 
+import { update } from '../services/withUser';
 import { TaskApi } from '../api/taskApi.js';
 
 import DaysList from '../components/DaysList';
+import SnackbarError from '../components/SnackbarError';
 
 class DayListContainer extends Component { 
 
 	state = {
-		tasks: []
+		tasks: [],
+		error: null
 	};
 
 	componentWillReceiveProps({ date, searchType }) {
@@ -53,15 +56,18 @@ class DayListContainer extends Component {
 
 			}
 
-			this.setState({
-				tasks: res.data
-			});
+			this.setState({ tasks: res.data });
 
 		} catch (err) {
-			console.log(err);
-			this.setState({
-				tasks: []
-			});
+			
+			if (err.response.status === 401) {
+				update(null);
+			} else {
+				this.setState({
+					error: `${err.response.statusText} - ${err.response.status}`,
+				});
+			}
+			
 		}
 
 	}
@@ -99,12 +105,23 @@ class DayListContainer extends Component {
 		return addHours(currentDate, timezone).toString();
 	}
 
+	handleErrorDelete = () => {
+		this.setState({
+			error: null,
+		});
+	}
+
 	render () {
 
-		const { tasks } = this.state;
+		const { tasks, error } = this.state;
 
 		return(
-			<DaysList tasks={tasks} cleaningTimezone={this.cleaningTimezone}/>
+			<Fragment>
+				<DaysList tasks={tasks} cleaningTimezone={this.cleaningTimezone}/>
+				{error &&
+					<SnackbarError text={error} handleErrorDelete={this.handleErrorDelete}/>
+				}
+			</Fragment>
 		);
 	}
 }

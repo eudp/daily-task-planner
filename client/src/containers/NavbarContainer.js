@@ -21,7 +21,7 @@ const NavbarContainer = ({ user, history }) => {
 			update(null);
 
 		} catch (err) {
-			console.log(err);
+			console.log(`${err.response.statusText} - ${err.response.status}`);
 		}
 
 	}

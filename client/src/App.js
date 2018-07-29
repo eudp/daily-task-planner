@@ -49,9 +49,7 @@ class App extends Component {
 			update(res.data);
 
 		} catch (err) {
-			if (err.response.status === 401) {
-				update(null);
-			}
+			if (err.response.status === 401) update(null);
 		}
 
 	}

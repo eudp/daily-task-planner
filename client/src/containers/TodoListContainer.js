@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { update } from '../services/withUser';
 import { TaskApi } from '../api/taskApi';
 
 import TodoList from '../components/TodoList';
+import SnackbarError from '../components/SnackbarError';
 
 class TodoListContainer extends Component {
 
 	state = {
-		tasks: this.props.tasks
+		tasks: this.props.tasks,
+		error: null
 	};
 
 	handleAdd = async text => {
@@ -27,7 +30,16 @@ class TodoListContainer extends Component {
 			});
 
 		} catch (err) {
-			console.log(err);
+			
+			if (err.response.status === 401) {
+				update(null);
+			} else {
+				console.log(`${err.response.statusText} - ${err.response.status}`)
+				this.setState({
+					error: `${err.response.statusText} - ${err.response.status}`,
+				});
+			}
+
 		}
 
 	}
@@ -45,7 +57,15 @@ class TodoListContainer extends Component {
 			});
 
 		} catch (err) {
-			console.log(err);
+			
+			if (err.response.status === 401) {
+				update(null);
+			} else {
+				this.setState({
+					error: `${err.response.statusText} - ${err.response.status}`,
+				});
+			}
+
 		}
 		
 	}
@@ -62,22 +82,41 @@ class TodoListContainer extends Component {
 			});
 
 		} catch (err) {
-			console.log(err);
+			
+			if (err.response.status === 401) {
+				update(null);
+			} else {
+				this.setState({
+					error: `${err.response.statusText} - ${err.response.status}`,
+				});
+			}
+
 		}
 
 	}
 
+	handleErrorDelete = () => {
+		this.setState({
+			error: null,
+		});
+	}
+
 	render() {
 
-		const { tasks } = this.state;
+		const { tasks, error } = this.state;
 
 		return (
-			<TodoList
-				tasks={tasks} 
-				handleDelete={this.handleDelete} 
-				handleUpdate={this.handleUpdate} 
-				handleAdd={this.handleAdd} 
-			/>
+			<Fragment>
+				<TodoList
+					tasks={tasks} 
+					handleDelete={this.handleDelete} 
+					handleUpdate={this.handleUpdate} 
+					handleAdd={this.handleAdd} 
+				/>
+				{error &&
+					<SnackbarError text={error} handleErrorDelete={this.handleErrorDelete}/>
+				}
+			</Fragment>
 		);
 	}
 
