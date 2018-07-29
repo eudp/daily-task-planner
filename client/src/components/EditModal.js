@@ -72,6 +72,7 @@ class EditModal extends Component {
 					        margin="normal"
 					        defaultValue={text}
 					        onChange={this.handleInputChanged}
+					        required
 					      />
 					    </Grid>
 		  			</Grid>
