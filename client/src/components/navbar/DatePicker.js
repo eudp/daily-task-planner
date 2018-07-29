@@ -56,6 +56,11 @@ const styles = theme => ({
     borderTopRightRadius: '50%',
     borderBottomRightRadius: '50%',
   },
+  pickers: {
+    minWidth: '120px',
+    overflow: 'hidden',
+    marginLeft: '15px',
+  }
 });
 
 const Picker = ({ date, searchType, handleDateChange, classes }) => {
@@ -125,7 +130,7 @@ const Picker = ({ date, searchType, handleDateChange, classes }) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <div className="pickers">
+      <div className={classes.pickers}>
         <DatePicker 
         	value={date} 
         	onChange={handleDateChange} 
