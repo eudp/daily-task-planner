@@ -19,31 +19,27 @@ const styles = theme => ({
   }
 });
 
-const SearchType = ({ searchType, handleTypeChange, classes }) => {
-
-  return (
-    <div className={classes.root}>
-      <FormControl
-        required
-        className={classes.formControl}
+const SearchType = ({ searchType, handleTypeChange, classes }) => (
+  <div className={classes.root}>
+    <FormControl
+      required
+      className={classes.formControl}
+    >
+      <RadioGroup
+        aria-label="Type of search"
+        name="search-type"
+        className={classes.group}
+        value={searchType}
+        onChange={handleTypeChange}
+        row
       >
-        <RadioGroup
-          aria-label="Type of search"
-          name="search-type"
-          className={classes.group}
-          value={searchType}
-          onChange={handleTypeChange}
-          row
-        >
-          <FormControlLabel value="default" control={<Radio />} label="Default" />
-          <FormControlLabel value="week" control={<Radio />} label="Week" />
-          <FormControlLabel value="month" control={<Radio />} label="Month" />
-        </RadioGroup>
-      </FormControl>
-    </div>
-  );
-  
-}
+        <FormControlLabel value="default" control={<Radio />} label="Default" />
+        <FormControlLabel value="week" control={<Radio />} label="Week" />
+        <FormControlLabel value="month" control={<Radio />} label="Month" />
+      </RadioGroup>
+    </FormControl>
+  </div>
+)
 
 SearchType.propTypes = {
   classes: PropTypes.object.isRequired,

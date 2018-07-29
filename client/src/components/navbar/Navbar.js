@@ -26,35 +26,32 @@ const styles = {
 	}
 };
 
-const Navbar = ({ user, classes, handleLogIn, handleLogOut }) => {
-
-	return (
-		<div className={classes.root}>
-			<AppBar position="static">
-				<Toolbar>
-						
-							<Typography variant="title" color="inherit" className={classes.flex}>
-								<Link to="/" className={classes.titleLink}>
-									<Hidden xsDown>
-										Daily Task Planner {user ? `| ${user.userName}` : ``}
-									</Hidden>
-									<Hidden smUp>
-										DTP
-									</Hidden>
-								</Link>
-							</Typography>
-					{user ?
-						<Fragment>
-							<DatePickerContainer />
-							<SearchTypeContainer />
-							<LoginMenu onLogOut={handleLogOut} />
-						</Fragment>
-						: <LoginButton onClick={handleLogIn} />}
-				</Toolbar>
-			</AppBar>
-		</div>
-	);
-}
+const Navbar = ({ user, classes, handleLogIn, handleLogOut }) => (
+	<div className={classes.root}>
+		<AppBar position="static">
+			<Toolbar>
+					
+						<Typography variant="title" color="inherit" className={classes.flex}>
+							<Link to="/" className={classes.titleLink}>
+								<Hidden xsDown>
+									Daily Task Planner {user ? `| ${user.userName}` : ``}
+								</Hidden>
+								<Hidden smUp>
+									DTP
+								</Hidden>
+							</Link>
+						</Typography>
+				{user ?
+					<Fragment>
+						<DatePickerContainer />
+						<SearchTypeContainer />
+						<LoginMenu onLogOut={handleLogOut} />
+					</Fragment>
+					: <LoginButton onClick={handleLogIn} />}
+			</Toolbar>
+		</AppBar>
+	</div>
+)
 
 Navbar.propTypes = {
 	user: PropTypes.object,

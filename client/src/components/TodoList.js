@@ -8,33 +8,29 @@ import TodoItem from './TodoItem';
 import TodoAdd from './TodoAdd';
 
 
-const TodoList = ({ tasks, handleDelete, handleUpdate, handleAdd }) => {
+const TodoList = ({ tasks, handleDelete, handleUpdate, handleAdd }) => (
+	<Fragment>
 
-	return (
-		<Fragment>
+		{tasks.length ? (
 
-			{tasks.length ? (
+			<List>
+				{tasks.map((task) =>
+					<TodoItem handleDelete={handleDelete} handleUpdate={handleUpdate} key={task._id} task={task}/>
+				)}
+			</List>
 
-				<List>
-					{tasks.map((task) =>
-						<TodoItem handleDelete={handleDelete} handleUpdate={handleUpdate} key={task._id} task={task}/>
-					)}
-				</List>
+		) : (
+			<Typography component="p" align="center" gutterBottom>
+				Without tasks yet.
+			</Typography>
+		)}
 
-			) : (
-				<Typography component="p" align="center" gutterBottom>
-					Without tasks yet.
-				</Typography>
-			)}
+		<Divider/>
 
-			<Divider/>
+		<TodoAdd handleAdd={handleAdd}/>
 
-			<TodoAdd handleAdd={handleAdd}/>
-
-		</Fragment>
-	);
-
-}
+	</Fragment>
+)
 
 TodoList.propTypes = {
 	tasks: PropTypes.array.isRequired,

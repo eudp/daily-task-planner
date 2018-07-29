@@ -5,28 +5,24 @@ import Typography from '@material-ui/core/Typography';
 
 import TodoDay from './TodoDay';
 
-const DaysList = ({ tasks, cleaningTimezone }) => { 
-
-	return(
-		<Grid container spacing={24} alignItems="center">
-			{!tasks &&
-				<Grid item xs={12} >
-					<Typography component="p">
-						Hold, on looking for your tasks...
-					</Typography>
-				</Grid>
-			}
-			{tasks &&
-				<Fragment>
-					{tasks.map((todoDay) => 
-						<TodoDay key={todoDay._id} todoDay={todoDay} cleaningTimezone={cleaningTimezone} />
-					)}
-				</Fragment>
-			}
-		</Grid>
-	);
-
-}
+const DaysList = ({ tasks, cleaningTimezone }) => (
+	<Grid container spacing={24} alignItems="center">
+		{!tasks &&
+			<Grid item xs={12} >
+				<Typography component="p">
+					Hold, on looking for your tasks...
+				</Typography>
+			</Grid>
+		}
+		{tasks &&
+			<Fragment>
+				{tasks.map((todoDay) => 
+					<TodoDay key={todoDay._id} todoDay={todoDay} cleaningTimezone={cleaningTimezone} />
+				)}
+			</Fragment>
+		}
+	</Grid>
+)
 
 DaysList.propTypes = {
 	cleaningTimezone: PropTypes.func.isRequired,
