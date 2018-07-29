@@ -23,7 +23,7 @@ module.exports = (app) => {
 	app.use(flash());
 	
 	passport.serializeUser((user, done) => {
-		console.log(`serializing user: `, user);
+		//console.log(`serializing user: `, user);
 		done(null, user._id);
 	});
 
@@ -33,7 +33,7 @@ module.exports = (app) => {
 
 			const user = await User.findById(id).exec();
 	
-			console.log(`deserializing user:`, user);
+			//console.log(`deserializing user:`, user);
 			done(null, user);
 
 		} catch (err) {
