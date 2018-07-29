@@ -32,7 +32,7 @@ tasksRouter.use((req, res, next) => {
 		return next();
 	} 
 
-	res.status(403).json({
+	res.status(401).json({
 		message: 'You are not currently logged in.'
 	});
 
