@@ -1,6 +1,6 @@
 {
-  "name": "todo-app",
-  "version": "0.0.0",
+  "name": "daily-task-planner-app",
+  "version": "1.0.0",
   "author": "Efrain Diaz",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "cookie-parser": "~1.4.3",
     "date-fns": "^1.29.0",
     "debug": "~3.1.0",
+    "dotenv": "^6.0.0",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
