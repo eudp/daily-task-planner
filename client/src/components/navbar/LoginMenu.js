@@ -54,9 +54,6 @@ class LoginMenu extends Component {
 	          horizontal: 'right',
 	        }}
 				>
-					<MenuItem onClick={this.handleClose}>
-						Profile
-					</MenuItem>
 					<MenuItem onClick={onLogOut} >
 						Log out
 					</MenuItem>
