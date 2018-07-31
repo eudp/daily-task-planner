@@ -1,6 +1,5 @@
 import HttpClient from './httpClient';
-
-const API = 'http://localhost:3000/api';
+import { API } from './api';
 
 const TASK_API = `${API}/task`;
 
