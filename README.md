@@ -14,7 +14,7 @@ Or create your own account.
 
 I wanted to have a private place for me to login and organize my days individually. You can add, edit or delete tasks of any day.
 
-## Screnshot 
+## Screenshot 
 
 ![screenshot daily task planner](https://i.imgur.com/WKrb4Pp.png)
 
