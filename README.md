@@ -1,8 +1,6 @@
 # Daily Task Planner
 
-This is a daily task planner application. Technologies involved: NodeJS, ExpressJS, React, Redux, PassportJS, among others. 
-
-The front end was developed using material desing (https://material-ui.com/). 
+This is a daily task planner application. Technologies involved: NodeJS, ExpressJS, React, Redux, PassportJS, among others. The front end was developed using material desing (https://material-ui.com/). 
 
 You can check the application here: https://radiant-citadel-47665.herokuapp.com/
 
